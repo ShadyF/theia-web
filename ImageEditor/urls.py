@@ -3,5 +3,5 @@ from .views import Editor
 
 urlpatterns = [
     url(r'^$', Editor.as_view(), name='editor'),
-    url(r'^sharpen/$', Editor.as_view(), name='processimage')
+    url(r'^process/$', Editor.as_view(), name='processimage')
 ]

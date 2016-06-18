@@ -1,7 +1,7 @@
 $(function () {
     "use strict";
     $('#imageLoader').on('change', handleImage);
-    $("#upload").click(UploadToServ);
+    $("#upload").click(sharpen);
     var canvas = document.getElementById('imageCanvas');
     var ctx = canvas.getContext('2d');
 
@@ -19,14 +19,14 @@ $(function () {
         reader.readAsDataURL(event.target.files[0]);
     }
 
-    function UploadToServ(event) {
+    function sharpen(event) {
         var dataURL = canvas.toDataURL();
-        $.post("sharpen/", {imgBase64: dataURL}, redrawCanvas);
+        $.post("process/", {imgBase64: dataURL, action: "sharpen"}, redrawCanvas);
     }
 
     function redrawCanvas(json) {
         var image = new Image();
-        image.src = json.img;
+        image.src = json.processed_image;
         ctx.drawImage(image, 0, 0);
     }
 
