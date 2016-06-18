@@ -16,6 +16,7 @@ from .secrets import *
 # Application definition
 
 INSTALLED_APPS = [
+    'ImageEditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
