@@ -10,7 +10,7 @@ html, body {
 }
 
 #wrapper {
-    padding-left: 0;
+    padding-left: 250px;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -22,7 +22,7 @@ html, body {
 }
 
 #wrapper.toggled {
-    padding-left: 250px;
+    padding-left: 0;
 }
 
 #sidebar-wrapper {
@@ -32,7 +32,7 @@ html, body {
     width: 0;
     height: 100%;
     margin-left: -250px;
-    overflow: auto;
+    overflow: hidden;
     background: #000;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -143,8 +143,13 @@ html, body {
 }
 
 .image-canvas {
-    height: calc(100% - 110px);
-    max-height: 100%;
+    height: calc(100% - 90px);
+    width: 100%;
+    overflow: auto;
+    text-align: center;
+}
+
+#imageCanvas {
 }
 
 .no-padding {
@@ -203,3 +208,20 @@ canvas {
     border: 1px solid #d91365;
     border-top-color: transparent;
 }
+
+#menu-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#menu-toggle.toggled {
+    left: 260px;
+}
+
+/* pinkish #c4918a;
+blueish #32383f; */

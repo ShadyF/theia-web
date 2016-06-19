@@ -11,6 +11,8 @@ $(function () {
         reader.onload = function (theFile) {
             var img = new Image();
             img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
                 ctx.drawImage(img, 0, 0);
             };
             img.src = theFile.target.result;
@@ -47,6 +49,7 @@ $(function () {
     $("#menu-toggle").click(function (e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
+        $(this).toggleClass("toggled");
     });
 
     $('.nav-tabs a').click(function (e) {
@@ -65,7 +68,13 @@ $(function () {
 
     window.onload = function () {
         var div = document.getElementsByClassName("image-canvas")
+        canvas.height = div[0].offsetHeight - 7;
+        canvas.width = div[0].offsetWidth - 7;
+    };
+    /*
+     $(window).on('resize', function () {
+     var div = document.getElementsByClassName("image-canvas")
         canvas.height = div[0].offsetHeight;
         canvas.width = div[0].offsetWidth;
-    }
+     }); */
 });
