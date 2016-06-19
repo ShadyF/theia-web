@@ -1,10 +1,10 @@
 $(function () {
     "use strict";
-    $('#imageLoader').on('change', handleImage);
+    /*$('#imageLoader').on('change', handleImage);
     $(".filter-button").click(processImage);
     $(".image-forms").on('submit', processImage)
     var canvas = document.getElementById('imageCanvas');
-    var ctx = canvas.getContext('2d');
+     var ctx = canvas.getContext('2d');*/
 
     function handleImage(event) {
         var reader = new FileReader();
@@ -40,5 +40,9 @@ $(function () {
         ctx.drawImage(image, 0, 0);
     }
 
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
 
 });
