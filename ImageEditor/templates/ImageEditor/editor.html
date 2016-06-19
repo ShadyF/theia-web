@@ -2,8 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Theia
-    </title>
+    <title>Theia</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,25 +18,43 @@
 <div id="wrapper">
     {% include 'includes/sidebar.html' %}
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <a href="#" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+        <div class="container-fluid fill">
+            <section class="image-canvas">
+                <a href="#" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                <canvas id="imageCanvas"></canvas>
+            </section>
             <nav class="navbar navbar-default navbar-fixed-bottom">
-                <div class="container-fluid">
+                <div class="container-fluid fill">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="transforms">YO!</div>
+                        <div role="tabpanel" class="tab-pane" id="filters">
+                            <button type="button" class="btn btn-default filter-button" data-action="Sharpen">
+                                Sharpen
+                            </button>
+                            <button type="button" class="btn btn-default filter-button" data-action="Blur">Blur
+                            </button>
+                            <button type="button" class="btn btn-default filter-button"
+                                    data-action="EdgeEnhance">
+                                Edge
+                                Enhance
+                            </button>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="draw">...</div>
+                    </div>
                     <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a href="#">Home</a></li>
-                        <li role="presentation"><a href="#">Profile</a></li>
-                        <li role="presentation"><a href="#">Messages</a></li>
+                        <li role="presentation" class="active"><a href="#transforms">Transforms</a></li>
+                        <li role="presentation"><a href="#filters">Filters</a></li>
+                        <li role="presentation"><a href="#draw">Draw</a></li>
                     </ul>
                 </div>
             </nav>
         </div>
     </div>
-</div>
-<!--Main Scripts-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/ajax_csrf.js' %}"></script>
-<script type='text/javascript' src="{% static 'js/editor.js' %}"></script>
+    <!--Main Scripts-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/ajax_csrf.js' %}"></script>
+    <script type='text/javascript' src="{% static 'js/editor.js' %}"></script>
 </body>
 
 </html>

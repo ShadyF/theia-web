@@ -16,6 +16,9 @@ html, body {
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
     height: 100%;
+    max-height: 100%;
+    width: 100%;
+    max-width: 100%;
 }
 
 #wrapper.toggled {
@@ -35,6 +38,8 @@ html, body {
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    color: #FFF;
+    text-align: center;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -65,7 +70,6 @@ html, body {
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
     line-height: 40px;
 }
 
@@ -73,6 +77,8 @@ html, body {
     display: block;
     text-decoration: none;
     color: #999999;
+    text-align: center;
+
 }
 
 .sidebar-nav li a:hover {
@@ -86,6 +92,7 @@ html, body {
     text-decoration: none;
 }
 
+/*
 .sidebar-nav > .sidebar-brand {
     height: 65px;
     font-size: 18px;
@@ -100,10 +107,7 @@ html, body {
     color: #fff;
     background: none;
 }
-
-.navbar-fixed-bottom {
-    position: absolute;
-}
+*/
 
 @media (min-width: 768px) {
     #wrapper {
@@ -131,4 +135,71 @@ html, body {
         position: relative;
         margin-right: 0;
     }
+}
+
+/* personal stuff*/
+.fill {
+    height: 100%;
+}
+
+.image-canvas {
+    height: calc(100% - 110px);
+    max-height: 100%;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+canvas {
+    border: 1px solid #2b542c;
+}
+
+.tab-content {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.top {
+    height: 85%;
+}
+
+.bottom {
+    height: auto;
+
+}
+
+.navbar-fixed-bottom {
+    position: absolute;
+    bottom: 0;
+}
+
+.nav-tabs {
+    width: 100%;
+    border-bottom: none;
+    border-top: 1px solid #d91365;
+    margin-top: 0;
+}
+
+.nav-tabs > li {
+    margin-top: -1px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.nav > li > a:hover {
+    text-decoration: none;
+    background-color: #d91365;
+}
+
+.nav-tabs > li > a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 0 0 4px 4px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    border: 1px solid #d91365;
+    border-top-color: transparent;
 }
