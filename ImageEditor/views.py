@@ -21,8 +21,11 @@ class Editor(View):
         return render(request, self.template_name)
 
     def post(self, request):
-        image_bytes = self.decode_base64_image(request.POST.get('imgBase64'))
+        if request.POST.get('save') == 'true':
+            request.session['image'] = request.POST['imgBase64']
+            request.session.set_expiry(0)
 
+        image_bytes = self.decode_base64_image(request.session['image'])
         # Open image using Pillow
         image = Image.open(image_bytes)
 
