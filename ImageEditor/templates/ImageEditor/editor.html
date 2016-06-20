@@ -27,6 +27,11 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="transforms">YO!</div>
                         <div role="tabpanel" class="tab-pane" id="filters">
+                            {% for color in filters %}
+                                <button type="button" class="btn btn-default color-filter" data-action={{ color.name }}>
+                                    {{ color.name|capfirst }}
+                                </button>
+                            {% endfor %}
                             <button type="button" class="btn btn-default filter-button" data-action="Sharpen">
                                 Sharpen
                             </button>

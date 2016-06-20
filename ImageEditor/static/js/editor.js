@@ -2,9 +2,18 @@ $(function () {
     "use strict";
     $('#imageLoader').on('change', uploadImageFromForm);
     $(".filter-button").click(processImage);
+    $(".color-filter").click(applyFilter);
     $(".image-forms").on('submit', processImage)
     var canvas = document.getElementById('imageCanvas');
     var ctx = canvas.getContext('2d');
+
+
+    function applyFilter(event) {
+        var dataURL = canvas.toDataURL();
+        $.post("filter/" + $(this).data('action') + "/", {
+            imgBase64: dataURL
+        }, redrawCanvas);
+    }
 
     function saveImageOnServer(img_data) {
         $.post("process/", {
@@ -20,9 +29,9 @@ $(function () {
         reader.onload = function (theFile) {
             var img = new Image();
             $.post("process/", {
-                imgBase64: theFile.target.result,
-                action: $(this).data("action"),
-                save: true
+                imgBase64: theFile.target.result
+            }, function () {
+                console.log("Upload Sucess")
             });
             img.onload = function () {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);

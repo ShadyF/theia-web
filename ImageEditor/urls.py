@@ -1,7 +1,8 @@
 from django.conf.urls import url
-from .views import Editor
+from . import views
 
 urlpatterns = [
-    url(r'^$', Editor.as_view(), name='editor'),
-    url(r'^process/$', Editor.as_view(), name='processimage')
+    url(r'^$', views.Editor.as_view(), name='editor'),
+    url(r'^process/$', views.Editor.as_view(), name='processimage'),
+    url(r'^filter/(?P<filter_name>\w+)/$', views.apply_color_filter)
 ]
