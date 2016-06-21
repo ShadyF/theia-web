@@ -2,7 +2,7 @@ $(function () {
     "use strict";
     $('#imageLoader').on('change', uploadImageFromForm);
     $(".filter-button").click(processImage);
-    $(".color-filter").click(applyFilter);
+    $(".tint").click(applyFilter);
     $(".image-forms").on('submit', processImage)
     var canvas = document.getElementById('imageCanvas');
     var ctx = canvas.getContext('2d');
@@ -10,8 +10,9 @@ $(function () {
 
     function applyFilter(event) {
         var dataURL = canvas.toDataURL();
-        $.post("filter/" + $(this).data('action') + "/", {
-            imgBase64: dataURL
+        $.post($(this).data('operation') + "/", {
+            imgBase64: dataURL,
+            params: $(this).data('tint_name')
         }, redrawCanvas);
     }
 
@@ -28,7 +29,7 @@ $(function () {
         var reader = new FileReader();
         reader.onload = function (theFile) {
             var img = new Image();
-            $.post("process/", {
+            $.post("upload/", {
                 imgBase64: theFile.target.result
             }, function () {
                 console.log("Upload Sucess")
@@ -73,15 +74,9 @@ $(function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         var image = new Image();
         image.src = json.processed_image;
-        if (image.width > canvas.width || image.height > canvas.height)
-            fitToContainer(canvas);
-        else {
-
-            canvas.height = image.height;
-            canvas.width = image.width;
-        }
+        canvas.height = image.height;
+        canvas.width = image.width;
         ctx.drawImage(image, 0, 0);
-
     }
 
     $("#menu-toggle").click(function (e) {

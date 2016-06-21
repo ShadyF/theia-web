@@ -25,10 +25,11 @@
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container-fluid fill">
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="transforms">YO!</div>
-                        <div role="tabpanel" class="tab-pane" id="filters">
+                        <div role="tabpanel" class="tab-pane active" id="transforms">TO BE IMPLEMENTED</div>
+                        <div role="tabpanel" class="tab-pane" id="tints">
                             {% for color in filters %}
-                                <button type="button" class="btn btn-default color-filter" data-action={{ color.name }}>
+                                <button type="button" class="btn btn-default tint" data-operation=tint
+                                        data-tint_name={{ color.name }}>
                                     {{ color.name|capfirst }}
                                 </button>
                             {% endfor %}
@@ -43,11 +44,15 @@
                                 Enhance
                             </button>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="draw">...</div>
+                        <div role="tabpanel" class="tab-pane" id="enhancements">TO BE IMPLEMENTED</div>
+                        <div role="tabpanel" class="tab-pane" id="kernelfilter">TO BE IMPLEMENTED</div>
+                        <div role="tabpanel" class="tab-pane" id="draw">TO BE IMPLEMENTED</div>
                     </div>
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="#transforms">Transforms</a></li>
-                        <li role="presentation"><a href="#filters">Filters</a></li>
+                        <li role="presentation"><a href="#tints">Tints</a></li>
+                        <li role="presentation"><a href="#enhancements">Enhancements</a></li>
+                        <li role="presentation"><a href="#kernelfilter">Kernel Filters</a></li>
                         <li role="presentation"><a href="#draw">Draw</a></li>
                     </ul>
                 </div>
