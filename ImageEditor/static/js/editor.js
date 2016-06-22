@@ -1,4 +1,5 @@
 /*TODO: Clean this mess up and fix enhancement buttons needing two clicks to trigger*/
+/*TODO: Seperate everything*/
 $(function () {
     "use strict";
     $('#imageLoader').on('change', uploadImageFromForm);
@@ -44,6 +45,8 @@ $(function () {
 
     var canvas = document.getElementById('imageCanvas');
     var ctx = canvas.getContext('2d');
+
+    $(canvas).jqScribble({width: 0, height: 0, draw: false, brushSize: 4});
 
     function uploadImageFromForm(event) {
         var reader = new FileReader();
@@ -138,7 +141,18 @@ $(function () {
         canvas.height = div[0].offsetHeight - 7;
         canvas.width = div[0].offsetWidth - 7;
     };
+    $('#color-picker').minicolors({
+        position: "top left", format: "rgb", change: function (value, opacity) {
+            $(canvas).data('jqScribble').update({brushColor: value});
+        }
+    });
 
+    var draw = false;
+
+    $('button#draw').click(function () {
+        $(canvas).data('jqScribble').update({draw: !draw});
+        draw = !draw;
+    });
     /*
      $(window).on('resize', function () {
      var div = document.getElementsByClassName("image-canvas")

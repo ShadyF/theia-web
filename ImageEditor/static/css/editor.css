@@ -33,7 +33,7 @@ html, body {
     height: 100%;
     margin-left: -250px;
     overflow: hidden;
-    background: #000;
+    background: #343434;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -228,5 +228,10 @@ canvas {
     max-height: 65px;
     text-align: center;
 }
+
+.color-picker {
+    font-size: 30px;
+}
+
 /* pinkish #c4918a;
 blueish #32383f; */
