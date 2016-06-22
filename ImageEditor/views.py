@@ -1,102 +1,86 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse, Http404
+
+from .Transformations import *
+from .Tints import *
+from .Enhancements import *
+from .KernelFilters import *
+
 from .models import ColorFilter
 
 from io import BytesIO
-from PIL import Image, ImageFilter, ImageEnhance
-import base64
-import re
-from urllib.parse import parse_qs
+from PIL import Image
+from base64 import b64encode, b64decode
+from re import sub
 
-last_operation = ""
+LAST_OPERATION = ""
 
 
 class Editor(View):
     template_name = 'ImageEditor/editor.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        self.func_dict = {"Sharpen": self.sharpen, "Blur": self.blur,
-                          "EdgeEnhance": self.edgeEnhance, "Translate": self.translate,
-                          }
-        return super(Editor, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
         filters = ColorFilter.objects.all()
         context = {'filters': filters}
         return render(request, self.template_name, context)
 
-    def post(self, request):
-        # if request.POST.get('save') == 'true':
-        request.session['image'] = request.POST['imgBase64']
-        request.session.set_expiry(0)
 
-        #image_bytes = self.decode_base64_image(request.session['image'])
-        # Open image using Pillow
-        #image = Image.open(image_bytes)
-        # Call approriate function corresponding to action attr from ajax call
-        # try:
-        #    im = self.func_dict[request.POST.get('action')](image, request.POST.get('params'))
-        # except TypeError:
-        #    im = self.func_dict[request.POST.get('action')](image)
-        # except:
-        #    im = image
-        # Encode the image back again to base64
-        # encoded_image = self.encode_base64_image(im)
-        #image.close()
+class ImageOperation(View):
+    def post(self, request, operation_type):
+        class_dict = self.get_class_dict()  # Get dict of all available operations
 
-        # return json to ajax call
-        # return JsonResponse({'processed_image': encoded_image})
-        return JsonResponse({'processed_image': "OK"})
+        if operation_type not in class_dict:  # Raise 404 if invalid operation
+            raise Http404
 
-    @staticmethod
-    def sharpen(im):
-        return im.filter(ImageFilter.SHARPEN())
-        # To scale down image
-        # im.thumbnail((1200, 1200), Image.ANTIALIAS)
-        # return im
+        # If the last operation is not the same as the last one, get an the update image from the canvas
+        # and store it in the user's current session
 
-    @staticmethod
-    def blur(im):
-        return im.filter(ImageFilter.BLUR)
+        # If the last operation was the same as the current one, edit the previously saved image
+        # This solves the scenario where the user is testing out different values of sharpness, for examaple
+        # as updating the image for each harpness change would cause the sharpness enhancement to be applied to
+        # a previously sharpened image.
+        global LAST_OPERATION
+        if LAST_OPERATION != operation_type:
+            LAST_OPERATION = operation_type
+            request.session['current_image_base64'] = request.POST.get('imgBase64')
 
-    @staticmethod
-    def edgeEnhance(im):
-        return im.filter(ImageFilter.EDGE_ENHANCE)
+        image_base64 = request.session.get('current_image_base64')
+        image_bytes = self.decode_base64_image(image_base64)
+        image = Image.open(image_bytes)
 
-    # need to be sped up
-    # crop and paste?
-    @staticmethod
-    def translate(im, params):
-        params = parse_qs(params)
-        print(params['X'])
-        dx = int(params['X'][0])
-        dy = int(params['Y'][0])
-        x_size = im.size[0]
-        y_size = im.size[1]
-        curr = im.load()
-        new_img = Image.new('RGB', (x_size, y_size))
-        for x in range(x_size):
-            for y in range(y_size):
-                rgb_val = curr[x, y]
-                x_new = x + dx
-                y_new = y + dy
+        # Instantiate the approrpriate image operation
+        operation = class_dict[operation_type](request.POST['params'])
 
-                if x_new in range(x_size) and y_new in range(y_size):
-                    new_img.putpixel((x_new, y_new), rgb_val)
+        # process the current image
+        output_image = operation.process(image)
+        output_image_base64 = self.encode_base64_image(output_image)
 
-        return new_img
+        image.close()
+
+        return JsonResponse({'processed_image': output_image_base64})
 
     @staticmethod
     def decode_base64_image(base64_string):
-        img_data = re.sub('^data:image/.+;base64,', '', base64_string)
-        return BytesIO(base64.b64decode(img_data))
+        # Remove the "data:image/jpg;base64," tag at the beginning of the string
+        # Would lead to a corrupted image otherwise
+        img_data = sub('^data:image/.+;base64,', '', base64_string)
+        return BytesIO(b64decode(img_data))
 
     @staticmethod
     def encode_base64_image(image):
         buffered_image = BytesIO()
         image.save(buffered_image, format("JPEG"))
-        return 'data:image/jpg;base64,' + base64.b64encode(buffered_image.getvalue()).decode()
+        return 'data:image/jpg;base64,' + b64encode(buffered_image.getvalue()).decode()
+
+    @staticmethod
+    def get_class_dict():
+        """Return a dict of all the available image operations.
+        Any additional image operations should be added here"""
+        class_dict = {'translate': Translate, 'rotate': Rotate, 'kernel': KernelFilter,
+                      'sharp': Sharpness, 'bright': Brightness, 'color': Color,
+                      'contrast': Contrast, 'tint': Tint}
+        return class_dict
 
 
 class ImageUploadHandler(View):
@@ -105,117 +89,3 @@ class ImageUploadHandler(View):
         request.session['current_image_base64'] = request.POST['imgBase64']
         request.session.set_expiry(0)
         return JsonResponse({"OK": "IT WORKS"})
-
-
-class ImageOperation(View):
-    def post(self, request, operation_type):
-        class_dict = self.get_class_dict()
-
-        if operation_type not in class_dict:
-            raise Http404
-
-        global last_operation
-        if last_operation != operation_type:
-            last_operation = operation_type
-            request.session['current_image_base64'] = request.POST.get('imgBase64')
-
-        image_base64 = request.session.get('current_image_base64')
-        image_bytes = self.decode_base64_image(image_base64)
-        image = Image.open(image_bytes)
-
-        operation = class_dict[operation_type](request.POST['params'])
-        output_image = operation.process(image)
-
-        output_image_base64 = self.encode_base64_image(output_image)
-        image.close()
-        return JsonResponse({'processed_image': output_image_base64})
-
-    @staticmethod
-    def decode_base64_image(base64_string):
-        img_data = re.sub('^data:image/.+;base64,', '', base64_string)
-        return BytesIO(base64.b64decode(img_data))
-
-    @staticmethod
-    def encode_base64_image(image):
-        buffered_image = BytesIO()
-        image.save(buffered_image, format("JPEG"))
-        return 'data:image/jpg;base64,' + base64.b64encode(buffered_image.getvalue()).decode()
-
-    @staticmethod
-    def get_class_dict():
-        class_dict = {'translate': Translate, 'rotate': Rotate, 'kernel': KernelFilter,
-                      'sharp': Sharpness, 'bright': Brightness, 'color': Color,
-                      'contrast': Contrast, 'tint': Tint}
-        return class_dict
-
-
-class Tint:
-    # TODO: Set to receive custom palette and check filter if exists or custom
-    def __init__(self, filter_name):
-        print(filter_name)
-        filter_model = get_object_or_404(ColorFilter, name=filter_name)
-        self.filter_to_be_applied = self.make_linear_ramp((filter_model.red, filter_model.green, filter_model.blue))
-
-    def process(self, image):
-        image = image.convert('L')
-        image.putpalette(map(int, self.filter_to_be_applied))
-        image = image.convert('RGB')
-        return image
-
-    @staticmethod
-    def make_linear_ramp(white):
-        # putpalette expects [r,g,b,r,g,b,...]
-        ramp = []
-        r, g, b = white
-        for i in range(255):
-            ramp.extend((r * i / 255, g * i / 255, b * i / 255))
-        return ramp
-
-
-class Translate:
-    def __init__(self):
-        pass
-
-
-class KernelFilter:
-    def __init__(self):
-        pass
-
-
-class Enhancement:
-    # TODO: add try catch block here when converting to float
-
-    def __init__(self, value_string="1.0"):
-        self.value = float(value_string)
-
-    def adjust(self, image):
-        return image
-
-    def process(self, image):
-        # if self.value != 1.0:
-        return self.adjust(image)
-
-
-
-class Sharpness(Enhancement):
-    def adjust(self, image):
-        return ImageEnhance.Sharpness(image).enhance(self.value)
-
-
-class Brightness(Enhancement):
-    def adjust(self, image):
-        return ImageEnhance.Brightness(image).enhance(self.value)
-
-
-class Contrast(Enhancement):
-    def adjust(self, image):
-        return ImageEnhance.Contrast(image).enhance(self.value)
-
-
-class Color(Enhancement):
-    def adjust(self, image):
-        return ImageEnhance.Color(image).enhance(self.value)
-
-class Rotate:
-    def __init__(self):
-        pass
