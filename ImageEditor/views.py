@@ -4,8 +4,7 @@ from django.http import JsonResponse, Http404
 from .models import ColorFilter
 
 from io import BytesIO
-from PIL import Image
-from PIL import ImageFilter
+from PIL import Image, ImageFilter, ImageEnhance
 import base64
 import re
 from urllib.parse import parse_qs
@@ -111,13 +110,12 @@ class ImageUploadHandler(View):
 class ImageOperation(View):
     def post(self, request, operation_type):
         class_dict = self.get_class_dict()
-        print(operation_type)
+
         if operation_type not in class_dict:
             raise Http404
-        print(last_operation + "and" + operation_type)
 
+        global last_operation
         if last_operation != operation_type:
-            global last_operation
             last_operation = operation_type
             request.session['current_image_base64'] = request.POST.get('imgBase64')
 
@@ -146,13 +144,15 @@ class ImageOperation(View):
     @staticmethod
     def get_class_dict():
         class_dict = {'translate': Translate, 'rotate': Rotate, 'kernel': KernelFilter,
-                      'sharp': Sharpness, 'bright': Brightness, 'tint': Tint}
+                      'sharp': Sharpness, 'bright': Brightness, 'color': Color,
+                      'contrast': Contrast, 'tint': Tint}
         return class_dict
 
 
 class Tint:
     # TODO: Set to receive custom palette and check filter if exists or custom
     def __init__(self, filter_name):
+        print(filter_name)
         filter_model = get_object_or_404(ColorFilter, name=filter_name)
         self.filter_to_be_applied = self.make_linear_ramp((filter_model.red, filter_model.green, filter_model.blue))
 
@@ -183,17 +183,38 @@ class KernelFilter:
 
 
 class Enhancement:
-    def __init__(self):
-        pass
+    # TODO: add try catch block here when converting to float
+
+    def __init__(self, value_string="1.0"):
+        self.value = float(value_string)
+
+    def adjust(self, image):
+        return image
+
+    def process(self, image):
+        # if self.value != 1.0:
+        return self.adjust(image)
+
 
 
 class Sharpness(Enhancement):
-    pass
+    def adjust(self, image):
+        return ImageEnhance.Sharpness(image).enhance(self.value)
 
 
 class Brightness(Enhancement):
-    pass
+    def adjust(self, image):
+        return ImageEnhance.Brightness(image).enhance(self.value)
 
+
+class Contrast(Enhancement):
+    def adjust(self, image):
+        return ImageEnhance.Contrast(image).enhance(self.value)
+
+
+class Color(Enhancement):
+    def adjust(self, image):
+        return ImageEnhance.Color(image).enhance(self.value)
 
 class Rotate:
     def __init__(self):

@@ -1,14 +1,69 @@
+/*TODO: Clean this mess up and fix enhancement buttons needing two clicks to trigger*/
 $(function () {
     "use strict";
     $('#imageLoader').on('change', uploadImageFromForm);
     $(".filter-button").click(processImage);
-    $(".tint").click(applyFilter);
-    $(".image-forms").on('submit', processImage)
+    $(".tint").click(applyTint);
+    $(".image-forms").on('submit', processImage);
+
+    var input_slider = '<span class="EnhancementValue">1.0</span>' +
+        '<input class="EnhancementFilter" type="range" min="-1.0" max="4.0" step="0.1" value="1.0">';
+
+    $('[data-toggle="popover"]').popover({
+        placement: "top", html: true,
+        content: input_slider
+    });
+
+    $('body').on('click', function (e) {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+    });
+
+    /*TODO: Optimize some of this stuff here*/
+
+    $('[data-toggle="popover"]').on('shown.bs.popover', function () {
+        $("input[type=range]").data('enhancement', $(this).data('enhancement'));
+        $("input[type=range]").on('input', function () {
+            $(".EnhancementValue").text($(this).val())
+        });
+        $("input[type=range]").on('change', function () {
+            event.preventDefault();
+            var dataURL = canvas.toDataURL();
+            $.post($(this).data('enhancement') + "/", {
+                imgBase64: dataURL,
+                params: $(this).val()
+            }, redrawCanvas);
+        })
+    });
+
+
     var canvas = document.getElementById('imageCanvas');
     var ctx = canvas.getContext('2d');
 
+    function uploadImageFromForm(event) {
+        var reader = new FileReader();
+        reader.onload = function (theFile) {
+            var img = new Image();
+            $.post("upload/", {
+                imgBase64: theFile.target.result
+            });
+            img.onload = function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            };
+            img.src = theFile.target.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
 
-    function applyFilter(event) {
+    function applyTint(event) {
         var dataURL = canvas.toDataURL();
         $.post($(this).data('operation') + "/", {
             imgBase64: dataURL,
@@ -23,26 +78,6 @@ $(function () {
             save: true,
             params: $(this).serialize()
         });
-    }
-
-    function uploadImageFromForm(event) {
-        var reader = new FileReader();
-        reader.onload = function (theFile) {
-            var img = new Image();
-            $.post("upload/", {
-                imgBase64: theFile.target.result
-            }, function () {
-                console.log("Upload Sucess")
-            });
-            img.onload = function () {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-            };
-            img.src = theFile.target.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
     }
 
     function handleImage(event) {
@@ -61,7 +96,6 @@ $(function () {
 
     function processImage(event) {
         event.preventDefault();
-        console.log(event);
         var dataURL = canvas.toDataURL();
         $.post("process/", {
             imgBase64: dataURL,
@@ -100,14 +134,16 @@ $(function () {
     }
 
     window.onload = function () {
-        var div = document.getElementsByClassName("image-canvas")
+        var div = document.getElementsByClassName("image-canvas");
         canvas.height = div[0].offsetHeight - 7;
         canvas.width = div[0].offsetWidth - 7;
     };
+
     /*
      $(window).on('resize', function () {
      var div = document.getElementsByClassName("image-canvas")
      canvas.height = div[0].offsetHeight;
      canvas.width = div[0].offsetWidth;
      }); */
+
 });

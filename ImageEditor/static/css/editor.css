@@ -5,6 +5,8 @@
  */
 
 /* Toggle Styles */
+
+/*TODO: make navbar scrollable to avoid having the navbar take too much space on lower dpi devices*/
 html, body {
     height: 100%;
 }
@@ -222,5 +224,9 @@ canvas {
     left: 10px;
 }
 
+.popover {
+    max-height: 65px;
+    text-align: center;
+}
 /* pinkish #c4918a;
 blueish #32383f; */

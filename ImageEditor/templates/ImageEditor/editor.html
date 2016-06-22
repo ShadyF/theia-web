@@ -33,18 +33,21 @@
                                     {{ color.name|capfirst }}
                                 </button>
                             {% endfor %}
-                            <button type="button" class="btn btn-default filter-button" data-action="Sharpen">
-                                Sharpen
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="enhancements">
+                            <button type="button" class="btn btn-default" data-toggle="popover"
+                                    data-enhancement="sharp">Sharpness
                             </button>
-                            <button type="button" class="btn btn-default filter-button" data-action="Blur">Blur
+                            <button type="button" class="btn btn-default" data-toggle="popover"
+                                    data-enhancement="bright">Brightness
                             </button>
-                            <button type="button" class="btn btn-default filter-button"
-                                    data-action="EdgeEnhance">
-                                Edge
-                                Enhance
+                            <button type="button" class="btn btn-default" data-toggle="popover"
+                                    data-enhancement="color">Color
+                            </button>
+                            <button type="button" class="btn btn-default" data-toggle="popover"
+                                    data-enhancement="contrast">Contrast
                             </button>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="enhancements">TO BE IMPLEMENTED</div>
                         <div role="tabpanel" class="tab-pane" id="kernelfilter">TO BE IMPLEMENTED</div>
                         <div role="tabpanel" class="tab-pane" id="draw">TO BE IMPLEMENTED</div>
                     </div>
