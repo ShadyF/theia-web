@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import Http404
 from django.views.generic import View
 from django.http import JsonResponse, Http404
 
@@ -88,4 +89,16 @@ class ImageUploadHandler(View):
         request.session['original_image_base64'] = request.POST['imgBase64']
         request.session['current_image_base64'] = request.POST['imgBase64']
         request.session.set_expiry(0)
+
         return JsonResponse({"OK": "IT WORKS"})
+
+
+def reset_image(request):
+    if request.method == 'POST':
+        try:
+            original_image = request.session['original_image_base64']
+        except KeyError:
+            raise Http404("Image could not be reset")
+
+        request.session['current_iamge_base64'] = original_image
+        return JsonResponse({'processed_image': original_image})
