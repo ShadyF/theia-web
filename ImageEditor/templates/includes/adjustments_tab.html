@@ -1,0 +1,7 @@
+<div role="tabpanel" class="tab-pane" id="enhancements">
+    {% for adjustment in adjustments %}
+        <button type="button" class="btn btn-default" data-toggle="popover"
+                data-enhancement="{{ adjustment.display_name }}">{{ adjustment.display_name }}
+        </button>
+    {% endfor %}
+</div>

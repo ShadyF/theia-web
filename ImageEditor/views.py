@@ -1,13 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.http import JsonResponse, Http404
 
 from .Transformations import *
-from .Tints import *
+from .Tints import Tint
 from .Enhancements import *
 from .KernelFilters import *
 
-from .models import ColorTint
+from .models import ColorTint, ImageFunction
 
 import re
 from io import BytesIO
@@ -21,8 +21,14 @@ class Editor(View):
     template_name = 'ImageEditor/editor.html'
 
     def get(self, request):
-        filters = ColorTint.objects.all()
-        context = {'filters': filters}
+        color_tints = ColorTint.objects.all()
+        adjustments = ImageFunction.objects.filter(function_type='Adjustment')
+        color_filters = ImageFunction.objects.filter(function_type='ColorFilter')
+        transforms = ImageFunction.objects.filter(function_type='Transform')
+        kernel_filters = ImageFunction.objects.filter(function_type='KernelFilter')
+        context = {'color_tints': color_tints, 'adjustments': adjustments,
+                   'color_filters': color_filters, 'transforms': transforms,
+                   'kernel_filters': kernel_filters}
         return render(request, self.template_name, context)
 
 
@@ -50,7 +56,8 @@ class ImageOperation(View):
         image = Image.open(image_bytes)
 
         # Instantiate the approrpriate image operation
-        operation = class_dict[operation_type](request.POST['params'])
+        class_to_instantiate = get_object_or_404(ImageFunction, display_name=operation_type).class_name
+        operation = class_dict[class_to_instantiate](request.POST['params'])
 
         # process the current image
         output_image = operation.process(image)
@@ -63,7 +70,7 @@ class ImageOperation(View):
     def decode_base64_image(self, base64_string):
         # Remove the "data:image/jpg;base64," tag at the beginning of the string
         # Would lead to a corrupted image otherwise
-        reg = re.compile("data:image\/(.*?);")
+        reg = re.compile("data:image/(.*?);")
         self.format = reg.match(base64_string[:25]).group(1)
         img_data = re.sub('^data:image/.+;base64,', '', base64_string)
         return BytesIO(b64decode(img_data))
@@ -78,9 +85,8 @@ class ImageOperation(View):
     def get_class_dict():
         """Return a dict of all the available image operations.
         Any additional image operations should be added here"""
-        class_dict = {'translate': Translate, 'rotate': Rotate, 'kernel': KernelFilter,
-                      'sharp': Sharpness, 'bright': Brightness, 'color': Color,
-                      'contrast': Contrast, 'tint': Tint}
+        class_dict = globals()
+        print(globals())
         return class_dict
 
 

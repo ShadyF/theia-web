@@ -149,7 +149,7 @@ function BasicCanvasSave(imageData) {
             canvas.addEventListener('touchstart', function (e) {
                 var o = $elm.offset();
                 e.preventDefault();
-                if (e.touches.length > 0 && setting.draw)self.brush.strokeBegin(e.touches[0].pageX - o.left, e.touches[0].pageY - o.top);
+                if (e.touches.length > 0)self.brush.strokeBegin(e.touches[0].pageX - o.left, e.touches[0].pageY - o.top);
 
             }, false);
 
