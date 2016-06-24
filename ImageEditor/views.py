@@ -10,10 +10,10 @@ from .KernelFilters import *
 
 from .models import ColorFilter
 
+import re
 from io import BytesIO
 from PIL import Image
 from base64 import b64encode, b64decode
-from re import sub
 
 LAST_OPERATION = ""
 
@@ -55,24 +55,25 @@ class ImageOperation(View):
 
         # process the current image
         output_image = operation.process(image)
-        output_image_base64 = self.encode_base64_image(output_image)
+        output_image_base64 = self.encode_base64_image(output_image, self.format)
 
         image.close()
 
         return JsonResponse({'processed_image': output_image_base64})
 
-    @staticmethod
-    def decode_base64_image(base64_string):
+    def decode_base64_image(self, base64_string):
         # Remove the "data:image/jpg;base64," tag at the beginning of the string
         # Would lead to a corrupted image otherwise
-        img_data = sub('^data:image/.+;base64,', '', base64_string)
+        reg = re.compile("data:image\/(.*?);")
+        self.format = reg.match(base64_string[:25]).group(1)
+        img_data = re.sub('^data:image/.+;base64,', '', base64_string)
         return BytesIO(b64decode(img_data))
 
     @staticmethod
-    def encode_base64_image(image):
+    def encode_base64_image(image, image_format):
         buffered_image = BytesIO()
-        image.save(buffered_image, format("JPEG"))
-        return 'data:image/jpg;base64,' + b64encode(buffered_image.getvalue()).decode()
+        image.save(buffered_image, format(image_format))
+        return 'data:image/' + image_format + ';base64,' + b64encode(buffered_image.getvalue()).decode()
 
     @staticmethod
     def get_class_dict():

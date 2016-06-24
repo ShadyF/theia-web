@@ -151,6 +151,10 @@ $(function () {
 
     $('button#draw').click(function () {
         $(canvas).data('jqScribble').update({draw: !draw});
+        if (!draw)
+            $(canvas).css('cursor', 'crosshair');
+        else
+            $(canvas).css('cursor', 'default');
         draw = !draw;
     });
     /*
