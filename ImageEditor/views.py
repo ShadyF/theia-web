@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.shortcuts import Http404
 from django.views.generic import View
 from django.http import JsonResponse, Http404
 
@@ -8,7 +7,7 @@ from .Tints import *
 from .Enhancements import *
 from .KernelFilters import *
 
-from .models import ColorFilter
+from .models import ColorTint
 
 import re
 from io import BytesIO
@@ -22,7 +21,7 @@ class Editor(View):
     template_name = 'ImageEditor/editor.html'
 
     def get(self, request):
-        filters = ColorFilter.objects.all()
+        filters = ColorTint.objects.all()
         context = {'filters': filters}
         return render(request, self.template_name, context)
 

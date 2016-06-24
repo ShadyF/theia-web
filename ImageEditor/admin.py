@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import ColorFilter
+from .models import ColorTint
 
-admin.site.register(ColorFilter)
+admin.site.register(ColorTint)

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class ColorFilter(models.Model):
+class ColorTint(models.Model):
     name = models.CharField(max_length=15)
     red = models.IntegerField(default=0)
     green = models.IntegerField(default=0)
