@@ -10,7 +10,7 @@ html, body {
     transition: all 0.5s ease;
     height: 100%;
     width: 100%;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #wrapper.toggled {
@@ -279,8 +279,39 @@ canvas {
     list-style: none;
 }
 
-.sidebar-header h1 {
+.sidebar-upper {
+    /*padding: 15px;*/
+}
 
+.btn-side {
+    width: 45%;
+    letter-spacing: 0.2em;
+    border-radius: 0;
+    border: 5px solid ghostwhite;
+    background-color: black;
+    margin: 0 3px 0 3px;
+}
+
+.btn-download {
+    width: 95%;
+    letter-spacing: 0.2em;
+    border-radius: 0;
+    border: 5px solid ghostwhite;
+    background-color: black;
+    margin: 10px 0 0 0;
+}
+
+.sidebar-upper header h1 {
+    letter-spacing: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.seperator {
+    height: 5px;
+    width: 100%;
+    margin: 20px 0 20px 0;
+    background: linear-gradient(90deg, rgba(107, 208, 228, 1) 0%, rgba(96, 78, 177, 1) 33%, rgba(200, 142, 102, 1) 66%, rgba(201, 85, 169, 1) 100%);
 }
 
 /* pinkish #c4918a;
