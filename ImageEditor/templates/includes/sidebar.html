@@ -1,18 +1,17 @@
 <aside id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-        <li class="sidebar-brand">
-            <header>
-                <h1>Theia</h1>
-                <span>An Online Image Processing Tool</span>
-            </header>
-        </li>
-        <li>
-            <section></section>
-        </li>
-        <li>
-            <input type="file" id="imageLoader" name="imageLoader"/>
-        </li>
-    </ul>
+    <section class="sidebar-upper">
+        <header>
+            <h1>Theia</h1>
+            <span>An Online Image Processing Tool</span>
+        </header>
+        <hr>
+        <label class="btn btn-default btn-file">
+            Browse <input type="file" id="imageLoader" style="display: none;">
+        </label>
+        <button type="button" id="myButton" class="btn btn-primary">
+            Reset
+        </button>
+    </section>
 </aside>
 
 <!--

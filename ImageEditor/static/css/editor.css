@@ -1,12 +1,3 @@
-/*!
- * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-
-/* Toggle Styles */
-
-/*TODO: make navbar scrollable to avoid having the navbar take too much space on lower dpi devices*/
 html, body {
     height: 100%;
 }
@@ -19,6 +10,7 @@ html, body {
     transition: all 0.5s ease;
     height: 100%;
     width: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 #wrapper.toggled {
@@ -33,13 +25,14 @@ html, body {
     height: 100%;
     margin-left: -250px;
     overflow: hidden;
-    background: #343434;
+    background: #111;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
     color: #FFF;
     text-align: center;
+    /*background-image: linear-gradient(0deg, rgba(107,208,228,1) 0%, rgba(96,78,177,1) 33%, rgba(200,142,102,1) 66%, rgba(201,85,169,1) 100%); /* w3c */
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -48,27 +41,19 @@ html, body {
 
 #page-content-wrapper {
     width: 100%;
-    position: absolute;
+    /* position: abosolute made sidebar overflow on <768 devices*/
+    position: relative;
     padding: 15px;
     height: 100%;
     background: #333;
 }
 
 #wrapper.toggled #page-content-wrapper {
-    position: absolute;
+    position: relative;
     margin-right: -250px;
 }
 
 /* Sidebar Styles */
-
-.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
 
 .sidebar-nav li {
     line-height: 40px;
@@ -258,6 +243,44 @@ canvas {
 
 .color-picker {
     font-size: 30px;
+}
+
+.glyphicon-tint {
+    font-size: 20px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.sidebar-upper {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-header h1 {
+
 }
 
 /* pinkish #c4918a;
