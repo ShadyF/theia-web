@@ -137,9 +137,9 @@ $(function () {
     }
 
     window.onload = function () {
-        var div = document.getElementsByClassName("image-canvas");
-        canvas.height = div[0].offsetHeight - 7;
-        canvas.width = div[0].offsetWidth - 7;
+        var rect = canvas.parentNode.getBoundingClientRect();
+        canvas.width = rect.width - 15;
+        canvas.height = rect.height - 15;
     };
     $('#color-picker').minicolors({
         position: "top left", format: "rgb", change: function (value, opacity) {

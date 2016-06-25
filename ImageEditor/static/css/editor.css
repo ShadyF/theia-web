@@ -51,6 +51,7 @@ html, body {
     position: absolute;
     padding: 15px;
     height: 100%;
+    background: #333;
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -146,7 +147,15 @@ html, body {
     height: calc(100% - 90px);
     width: 100%;
     overflow: auto;
-    text-align: center;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-justify-content: center;
+
+    align-items: center;
 }
 
 #imageCanvas {
@@ -157,12 +166,20 @@ html, body {
 }
 
 canvas {
-    border: 1px solid #2b542c;
+    border: .5em solid #fff;
+    box-shadow: 0 0 60px 20px rgba(0, 0, 0, 0.4);
 }
 
 .tab-content {
     padding-bottom: 10px;
     padding-top: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+#draw {
+    overflow: visible;
 }
 
 .top {
@@ -180,10 +197,17 @@ canvas {
 }
 
 .nav-tabs {
-    width: 100%;
+    width: auto;
+    white-space: nowrap;
     border-bottom: none;
     border-top: 1px solid #d91365;
     margin-top: 0;
+
+    /* The following makes the nav tabs scrollable */
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: -webkit-box;
+    display: -moz-box;
 }
 
 .nav-tabs > li {
@@ -191,6 +215,9 @@ canvas {
     white-space: nowrap;
     overflow: hidden;
     padding-bottom: 5px;
+
+    /* Makes nav tabs scrollable*/
+    float: none;
 }
 
 .nav > li > a:hover {
