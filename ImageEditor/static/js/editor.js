@@ -141,11 +141,7 @@ $(function () {
         canvas.width = rect.width - 15;
         canvas.height = rect.height - 15;
     };
-    $('#color-picker').minicolors({
-        position: "top left", format: "rgb", change: function (value, opacity) {
-            $(canvas).data('jqScribble').update({brushColor: value});
-        }
-    });
+
 
     var draw = false;
 
@@ -156,6 +152,11 @@ $(function () {
         else
             $(canvas).css('cursor', 'default');
         draw = !draw;
+    });
+
+    $('#cp4').colorpicker({align: 'left'}).on('changeColor', function (e) {
+        $(".glyphicon-tint")[0].style.color = e.color.toHex();
+        $(canvas).data('jqScribble').update({brushColor: e.color.toString('rgb')})
     });
     /*
      $(window).on('resize', function () {
