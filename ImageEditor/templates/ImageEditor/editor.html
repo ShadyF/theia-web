@@ -25,22 +25,21 @@
                 <canvas id="imageCanvas"></canvas>
             </section>
             <nav class="navbar navbar-default navbar-fixed-bottom">
-                <div class="container-fluid fill">
-                    <div class="tab-content">
-                        {% include 'includes/transforms_tab.html' %}
-                        {% include 'includes/tints_tab.html' %}
-                        {% include 'includes/adjustments_tab.html' %}
-                        {% include 'includes/kernel_tab.html' %}
-                        {% include 'includes/draw_tab.html' %}
-                    </div>
-                    <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a href="#transforms">Transforms</a></li>
-                        <li role="presentation"><a href="#tints">Tints</a></li>
-                        <li role="presentation"><a href="#enhancements">Enhancements</a></li>
-                        <li role="presentation"><a href="#kernelfilter">Kernel Filters</a></li>
-                        <li role="presentation"><a href="#draw">Draw</a></li>
-                    </ul>
+                <div class="tab-content">
+                    {% include 'includes/transforms_tab.html' %}
+                    {% include 'includes/tints_tab.html' %}
+                    {% include 'includes/adjustments_tab.html' %}
+                    {% include 'includes/kernel_tab.html' %}
+                    {% include 'includes/draw_tab.html' %}
                 </div>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a id="transform-nav-tab" href="#transforms">Transforms</a>
+                    </li>
+                    <li role="presentation"><a id="tints-nav-tab" href="#tints">Tints</a></li>
+                    <li role="presentation"><a id="adjustments-nav-tab" href="#enhancements">Enhancements</a></li>
+                    <li role="presentation"><a id="kernel-nav-tab" href="#kernelfilter">Kernel Filters</a></li>
+                    <li role="presentation"><a id="draw-nav-tab" href="#draw">Draw</a></li>
+                </ul>
             </nav>
         </div>
     </div>

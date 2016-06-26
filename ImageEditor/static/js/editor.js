@@ -158,6 +158,10 @@ $(function () {
         $(".glyphicon-tint")[0].style.color = e.color.toHex();
         $(canvas).data('jqScribble').update({brushColor: e.color.toString('rgb')})
     });
+    $(".nav-tabs").click(function () {
+        console.log($($(".active").children('a')[0]).css('backgound-color'));
+        $(this).css.borderTopColor = $(".active").css.background
+    });
     /*
      $(window).on('resize', function () {
      var div = document.getElementsByClassName("image-canvas")

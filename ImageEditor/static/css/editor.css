@@ -25,7 +25,7 @@ html, body {
     height: 100%;
     margin-left: -250px;
     overflow: hidden;
-    background: #111;
+    background: #1c1c1c;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -143,9 +143,6 @@ html, body {
     align-items: center;
 }
 
-#imageCanvas {
-}
-
 .no-padding {
     padding: 0;
 }
@@ -153,6 +150,7 @@ html, body {
 canvas {
     border: .5em solid #fff;
     box-shadow: 0 0 60px 20px rgba(0, 0, 0, 0.4);
+    background: white;
 }
 
 .tab-content {
@@ -161,33 +159,26 @@ canvas {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-}
-
-#draw {
-    overflow: visible;
-}
-
-.top {
-    height: 85%;
-}
-
-.bottom {
-    height: auto;
-
+    color: white;
 }
 
 .navbar-fixed-bottom {
     position: absolute;
     bottom: 0;
+    padding: 0 10px 4px 10px;
+    background: #1c1c1c;
+    border-top: 3px solid #368397;
+    letter-spacing: 0.1em;
 }
 
 .nav-tabs {
-    width: auto;
+    width: 100%;
     white-space: nowrap;
     border-bottom: none;
-    border-top: 1px solid #d91365;
+    border-top: 3px solid #368397;
     margin-top: 0;
-
+    margin-bottom: 0;
+    color: white;
     /* The following makes the nav tabs scrollable */
     overflow-x: auto;
     overflow-y: hidden;
@@ -196,30 +187,52 @@ canvas {
 }
 
 .nav-tabs > li {
-    margin-top: -1px;
     white-space: nowrap;
     overflow: hidden;
-    padding-bottom: 5px;
-
+    margin: 0;
+    padding: 0;
     /* Makes nav tabs scrollable*/
     float: none;
 }
 
-.nav > li > a:hover {
-    text-decoration: none;
-    background-color: #d91365;
-}
 
 .nav-tabs > li > a {
     margin-right: 2px;
     line-height: 1.42857143;
-    border: 1px solid transparent;
-    border-radius: 0 0 4px 4px;
+    border: none;
+    border-radius: 0;
+    padding-top: 12px;
+    color: white;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-    border: 1px solid #d91365;
-    border-top-color: transparent;
+.nav > li > #transform-nav-tab:hover, .nav-tabs > li.active > #transform-nav-tab, .nav-tabs > li.active > #transform-nav-tab:focus, .nav-tabs > li.active > #transform-nav-tab:hover {
+    background: #38b3c8;
+    color: white;
+    border: none;
+}
+
+.nav > li > #tints-nav-tab:hover, .nav-tabs > li.active > #tints-nav-tab, .nav-tabs > li.active > #tints-nav-tab:focus, .nav-tabs > li.active > #tints-nav-tab:hover {
+    background: #7f43c9;
+    color: white;
+    border: none;
+}
+
+.nav > li > #adjustments-nav-tab:hover, .nav-tabs > li.active > #adjustments-nav-tab, .nav-tabs > li.active > #adjustments-nav-tab:focus, .nav-tabs > li.active > #adjustments-nav-tab:hover {
+    background: #C88E66;
+    color: white;
+    border: none;
+}
+
+.nav > li > #kernel-nav-tab:hover, .nav-tabs > li.active > #kernel-nav-tab, .nav-tabs > li.active > #kernel-nav-tab:focus, .nav-tabs > li.active > #kernel-nav-tab:hover {
+    background: #c5c915;
+    color: white;
+    border: none;
+}
+
+.nav > li > #draw-nav-tab:hover, .nav-tabs > li.active > #draw-nav-tab, .nav-tabs > li.active > #draw-nav-tab:focus, .nav-tabs > li.active > #draw-nav-tab:hover {
+    background: #6fc700;
+    color: white;
+    border: none;
 }
 
 #menu-toggle {
@@ -276,7 +289,6 @@ canvas {
     width: 250px;
     margin: 0;
     padding: 0;
-    list-style: none;
 }
 
 .sidebar-upper {
@@ -288,7 +300,7 @@ canvas {
     letter-spacing: 0.2em;
     border-radius: 0;
     border: 5px solid ghostwhite;
-    background-color: black;
+    background-color: #111;
     margin: 0 3px 0 3px;
 }
 
@@ -297,7 +309,7 @@ canvas {
     letter-spacing: 0.2em;
     border-radius: 0;
     border: 5px solid ghostwhite;
-    background-color: black;
+    background-color: #111;
     margin: 10px 0 0 0;
 }
 
