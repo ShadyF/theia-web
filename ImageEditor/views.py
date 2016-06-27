@@ -83,10 +83,8 @@ class ImageOperation(View):
 
     @staticmethod
     def get_class_dict():
-        """Return a dict of all the available image operations.
-        Any additional image operations should be added here"""
+        """Return a dict of all the available classes in the global namespace"""
         class_dict = globals()
-        print(globals())
         return class_dict
 
 
