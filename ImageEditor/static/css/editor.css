@@ -291,6 +291,10 @@ canvas {
     margin: 0 3px 0 3px;
 }
 
+.btn-side:hover, .btn-download:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
 .btn-download {
     width: 95%;
     letter-spacing: 0.2em;
