@@ -116,10 +116,11 @@ $(function () {
         ctx.drawImage(image, 0, 0);
     }
 
-    $("#menu-toggle").click(function (e) {
+    $(".menu-toggle").click(function (e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
         $(this).toggleClass("toggled");
+        $(this).toggleClass('menu-toggle-active');
     });
 
     $('.nav-tabs a').click(function (e) {
@@ -168,5 +169,4 @@ $(function () {
      canvas.height = div[0].offsetHeight;
      canvas.width = div[0].offsetWidth;
      }); */
-
 });

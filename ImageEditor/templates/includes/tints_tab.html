@@ -1,6 +1,6 @@
 <div role="tabpanel" class="tab-pane" id="tints">
     {% for color in color_tints %}
-        <button type="button" class="btn btn-default tint" data-operation=Tint
+        <button type="button" class="btn btn-default tint btn-tabpane" data-operation=Tint
                 data-tint_name={{ color.name }}>
             {{ color.name|capfirst }}
         </button>
