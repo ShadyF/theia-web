@@ -6,7 +6,9 @@ $(function () {
     $(".filter-button").click(processImage);
     $(".tint").click(applyTint);
     $(".image-forms").on('submit', processImage);
-
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var ctx = canvas.getContext('2d');
+    var current_image = new Image();
     var input_slider = '<span class="EnhancementValue">1.0</span>' +
         '<input class="EnhancementFilter" type="range" min="-1.0" max="4.0" step="0.1" value="1.0">';
 
@@ -38,13 +40,9 @@ $(function () {
             $.post($(this).data('enhancement') + "/", {
                 imgBase64: dataURL,
                 params: $(this).val()
-            }, redrawCanvas);
+            }, handleCanvasImage);
         })
     });
-
-
-    var canvas = document.getElementById('imageCanvas');
-    var ctx = canvas.getContext('2d');
 
     $(canvas).jqScribble({width: 0, height: 0, draw: false, brushSize: 4});
 
@@ -56,12 +54,11 @@ $(function () {
                 imgBase64: theFile.target.result
             });
             img.onload = function () {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
+                current_image = img;
+                redrawCanvas()
             };
             img.src = theFile.target.result;
+            current_image = img;
         };
         reader.readAsDataURL(event.target.files[0]);
     }
@@ -71,7 +68,7 @@ $(function () {
         $.post($(this).data('operation') + "/", {
             imgBase64: dataURL,
             params: $(this).data('tint_name')
-        }, redrawCanvas);
+        }, handleCanvasImage);
     }
 
     function saveImageOnServer(img_data) {
@@ -104,16 +101,36 @@ $(function () {
             imgBase64: dataURL,
             action: $(this).data("action"),
             params: $(this).serialize()
-        }, redrawCanvas);
+        }, handleCanvasImage);
     }
 
-    function redrawCanvas(json) {
+    function handleCanvasImage(json) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var canvas_wrapper = $(".image-canvas")[0];
         var image = new Image();
         image.src = json.processed_image;
-        canvas.height = image.height;
-        canvas.width = image.width;
-        ctx.drawImage(image, 0, 0);
+        current_image = image;
+        var divHeight = canvas_wrapper.clientHeight;
+        var divWidth = canvas_wrapper.clientWidth;
+        var yScale = divHeight / image.height;
+        var xScale = divWidth / image.width;
+
+        var newImgHeight = image.height;
+        var newImgWidth = image.width;
+
+        if (newImgHeight > divHeight) {
+            newImgHeight = image.height * xScale;
+            newImgWidth = divWidth;
+        }
+        else if (newImgWidth > divWidth) {
+            newImgHeight = divHeight;
+            newImgWidth = image.width * yScale;
+            canvas.width = newImgWidth;
+            canvas.height = newImgHeight;
+        }
+        canvas.width = newImgWidth;
+        canvas.height = newImgHeight;
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     }
 
     $(".menu-toggle").click(function (e) {
@@ -141,6 +158,8 @@ $(function () {
         var rect = canvas.parentNode.getBoundingClientRect();
         canvas.width = rect.width - 15;
         canvas.height = rect.height - 15;
+        current_image.height = canvas.height;
+        current_image.width = canvas.width;
     };
 
 
@@ -163,10 +182,54 @@ $(function () {
         console.log($($(".active").children('a')[0]).css('backgound-color'));
         $(this).css.borderTopColor = $(".active").css.background
     });
-    /*
-     $(window).on('resize', function () {
-     var div = document.getElementsByClassName("image-canvas")
-     canvas.height = div[0].offsetHeight;
-     canvas.width = div[0].offsetWidth;
-     }); */
+
+    $(".menu-toggle").on('click', function () {
+        $("#wrapper").one(' otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            var canvas_wrapper = $(".image-canvas")[0];
+            var divHeight = canvas_wrapper.clientHeight;
+            var divWidth = canvas_wrapper.clientWidth;
+            var yScale = divHeight / current_image.height;
+            var xScale = divWidth / current_image.width;
+
+            var newImgHeight = current_image.height;
+            var newImgWidth = current_image.width;
+
+            if (newImgHeight > divHeight) {
+                newImgHeight = current_image.height * xScale;
+                newImgWidth = divWidth;
+            }
+            else if (newImgWidth > divWidth) {
+                newImgHeight = divHeight;
+                newImgWidth = current_image.width * yScale;
+            }
+            canvas.width = newImgWidth - 15;
+            canvas.height = newImgHeight - 15;
+            ctx.drawImage(current_image, 0, 0, canvas.width, canvas.height);
+        })
+    });
+    $(window).on('resize', redrawCanvas);
+    function redrawCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var canvas_wrapper = $(".image-canvas")[0];
+        var divHeight = canvas_wrapper.clientHeight;
+        var divWidth = canvas_wrapper.clientWidth;
+        var yScale = divHeight / current_image.height;
+        var xScale = divWidth / current_image.width;
+
+        var newImgHeight = current_image.height;
+        var newImgWidth = current_image.width;
+
+        if (newImgHeight > divHeight) {
+            newImgHeight = current_image.height * xScale;
+            newImgWidth = divWidth;
+        }
+        else if (newImgWidth > divWidth) {
+            newImgHeight = divHeight;
+            newImgWidth = current_image.width * yScale;
+        }
+        canvas.width = newImgWidth - 15;
+        canvas.height = newImgHeight - 15;
+        ctx.drawImage(current_image, 0, 0, canvas.width, canvas.height);
+    }
 });

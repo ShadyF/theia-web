@@ -135,12 +135,11 @@ html, body {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-
     -ms-flex-align: center;
     -webkit-align-items: center;
     -webkit-justify-content: center;
-
     align-items: center;
+    box-shadow: none;
 }
 
 .no-padding {
