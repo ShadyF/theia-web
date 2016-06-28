@@ -46,7 +46,7 @@ class ColorFilter:
             arg1=arg1
         )
 
-    def apply_viginette(self, color_1='none', color_2='black', crop_factor=1.5):
+    def apply_viginette(self, inner_color='none', outer_color='black', crop_factor=1.5):
         crop_x = floor(self.width * crop_factor)
         crop_y = floor(self.height * crop_factor)
         execute_command(
@@ -59,8 +59,8 @@ class ColorFilter:
             height=self.height,
             crop_x=crop_x,
             crop_y=crop_y,
-            color_1=color_1,
-            color_2=color_2
+            color_1=inner_color,
+            color_2=outer_color
         )
 
     def apply(self):
@@ -82,6 +82,15 @@ class Toaster(ColorFilter):
                         filename=self.file_path)
         self.apply_viginette('none', 'LavenderBlush3', 1.5)
         self.apply_viginette('#ff9966', 'none', 1.5)
+
+
+class SummerTouch(ColorFilter):
+    def apply(self):
+        self.colortone('#222b6d', 100, True)  # Change blacks to indigo
+        self.colortone('#f7daae', 100, False)  # Change whites to peach
+
+        execute_command('convert {filename} -contrast -modulate 100,150,100\
+                        -auto-gamma {filename}', filename=self.file_path)
 
 
 ##############################################################
