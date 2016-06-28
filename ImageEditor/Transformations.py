@@ -1,3 +1,5 @@
+from PIL import Image
+
 class Translate:
     def __init__(self):
         pass
@@ -24,5 +26,10 @@ class Translate:
 #     return new_img
 
 class Rotate:
-    def __init__(self):
-        pass
+    # TODO: Check if value between -180 and 180
+    def __init__(self, value_string="0"):
+        self.value = int(value_string)
+
+    def process(self, image):
+        # if self.value != 1.0:
+        return image.rotate(self.value, Image.BICUBIC, True)

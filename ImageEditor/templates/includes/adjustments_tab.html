@@ -1,8 +1,8 @@
 <div role="tabpanel" class="tab-pane" id="enhancements">
     {% for adjustment in adjustments %}
         <button type="button" class="btn btn-default btn-tabpane" data-toggle="popover"
-                data-content='<span class="AdjustmentValue">1.0</span>
-                <input class="AdjustmentSlider" data-operation="{{ adjustment.display_name }}"
+                data-content='<span class="slider-value">1.0</span>
+                <input class="slider-input" data-operation="{{ adjustment.display_name }}"
                 type="range" min="-1.0" max="4.0" step="0.1" value="1.0">'>
             {{ adjustment.display_name }}
         </button>

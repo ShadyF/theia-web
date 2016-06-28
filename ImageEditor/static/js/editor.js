@@ -49,9 +49,9 @@ $(function () {
             placement: "top", html: true
         })
         .on('shown.bs.popover', function () {
-            var slider = $('.AdjustmentSlider');
+            var slider = $('.slider-input');
             slider.on('input', function () {
-                $('.AdjustmentValue').text($(this).val())
+                $('.slider-value').text($(this).val())
             });
             slider.on('change', function (e) {
                 e.preventDefault();
