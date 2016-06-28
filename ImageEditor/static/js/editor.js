@@ -34,6 +34,9 @@ $(function () {
     /*###############################################*/
 
     $('#imageLoader').on('change', uploadImageFromForm);
+    $('.btn-reset').click(function () {
+        requestImageOperation('reset/', null);
+    });
     $(window).on('resize', redrawCanvas);
     $(".tint").click(function () {
         requestImageOperation($(this).data('operation') + '/', $(this).data('tint_name'));
@@ -42,7 +45,7 @@ $(function () {
     $(".color-filter").click(function () {
         requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'));
     });
-    
+
     $('.nav-tabs a').click(function (e) {
         e.preventDefault();
         $(this).tab('show')
@@ -94,10 +97,13 @@ $(function () {
 
     function requestImageOperation(op_url, op_params) {
         var dataURL = canvas.toDataURL();
-        var op_data = {
-            imgBase64: dataURL,
-            params: op_params
-        };
+        var op_data = null;
+
+        if (op_url != 'reset/')
+            op_data = {
+                imgBase64: dataURL,
+                params: op_params
+            };
 
         $.ajax({
             url: op_url,
