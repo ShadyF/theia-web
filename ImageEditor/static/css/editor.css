@@ -128,7 +128,7 @@ html, body {
     height: 100%;
 }
 
-.image-canvas {
+#canvas-wrapper {
     height: calc(100% - 90px);
     width: 100%;
     overflow: auto;

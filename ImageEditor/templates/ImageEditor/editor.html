@@ -21,11 +21,13 @@
     {% include 'includes/sidebar.html' %}
     <div id="page-content-wrapper">
         <div class="container-fluid fill">
-            <section class="image-canvas">
-                <canvas id="imageCanvas"></canvas>
+            <section id="canvas-wrapper">
+                <canvas></canvas>
             </section>
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="tab-content">
+                    {% csrf_token %}
+
                     {% include 'includes/transforms_tab.html' %}
                     {% include 'includes/tints_tab.html' %}
                     {% include 'includes/adjustments_tab.html' %}
@@ -56,24 +58,3 @@
 </body>
 
 </html>
-
-
-<!--
-<input type="file" id="imageLoader" name="imageLoader"/>
-{% csrf_token %}
-<button type="button" class="btn btn-default filter-button" data-action="Sharpen">Sharpen</button>
-<button type="button" class="btn btn-default filter-button" data-action="Blur">Blur</button>
-<button type="button" class="btn btn-default filter-button" data-action="EdgeEnhance">Edge Enhance</button>
-<form class="form-inline image-forms" data-action="Translate">
-    <div class="form-group">
-        <label for="exampleInputName2">X</label>
-        <input type="number" class="form-control" name="X" value="0" max="999" min="-999">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputEmail2">Y</label>
-        <input type="number" class="form-control" name="Y" value="0" max="999" min="-999">
-    </div>
-    <button type="submit" class="btn btn-default">Translate</button>
-</form>
-<canvas id="imageCanvas"></canvas>
--->
