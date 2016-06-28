@@ -11,6 +11,14 @@ class ColorTint(models.Model):
         return self.name + " (" + str(self.red) + ", " + str(self.green) + ", " + str(self.blue) + ")"
 
 
+class ColorFilter(models.Model):
+    name = models.CharField(max_length=20)
+    class_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
 class ImageFunction(models.Model):
     FUNCTION_TYPES = (
         ('Transform', 'Transform'),

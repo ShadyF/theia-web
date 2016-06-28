@@ -39,6 +39,10 @@ $(function () {
         requestImageOperation($(this).data('operation') + '/', $(this).data('tint_name'));
     });
 
+    $(".color-filter").click(function () {
+        requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'));
+    });
+    
     $('.nav-tabs a').click(function (e) {
         e.preventDefault();
         $(this).tab('show')

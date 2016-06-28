@@ -1,0 +1,8 @@
+<div role="tabpanel" class="tab-pane" id="colorfilters">
+    {% for filter in color_filters %}
+        <button type="button" class="btn btn-default color-filter btn-tabpane" data-operation="ColorFilter"
+                data-filter_name="{{ filter.name }}">
+            {{ filter.name }}
+        </button>
+    {% endfor %}
+</div>

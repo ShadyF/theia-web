@@ -235,6 +235,7 @@ canvas {
 .popover {
     max-height: 65px;
     text-align: center;
+    width: 200px;
 }
 
 .popover-content {
@@ -295,6 +296,7 @@ canvas {
     background: rgba(255, 255, 255, 0.1);
     color: white;
 }
+
 .btn-download {
     width: 95%;
     letter-spacing: 0.2em;

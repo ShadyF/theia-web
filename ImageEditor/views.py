@@ -6,8 +6,8 @@ from .Transformations import *
 from .Tints import Tint
 from .Enhancements import *
 from .KernelFilters import *
-
-from .models import ColorTint, ImageFunction
+from .ColorFilters import FilterManager
+from .models import ColorTint, ColorFilter, ImageFunction
 
 import re
 from io import BytesIO
@@ -22,8 +22,8 @@ class Editor(View):
 
     def get(self, request):
         color_tints = ColorTint.objects.all()
+        color_filters = ColorFilter.objects.all()
         adjustments = ImageFunction.objects.filter(function_type='Adjustment')
-        color_filters = ImageFunction.objects.filter(function_type='ColorFilter')
         transforms = ImageFunction.objects.filter(function_type='Transform')
         kernel_filters = ImageFunction.objects.filter(function_type='KernelFilter')
         context = {'color_tints': color_tints, 'adjustments': adjustments,
