@@ -10,11 +10,12 @@ class FilterManager:
     def __init__(self, filter_name):
         filter_model = get_object_or_404(ColorFilterModel, name=filter_name)
         self.filter_to_be_applied = filter_model.class_name
-        print(self.filter_to_be_applied)
 
     def process(self, image):
         temp_image = NamedTemporaryFile(mode='w+b')
-        image.save(temp_image, format(image.format))
+        print(image.format)
+        image.save(temp_image, format("JPEG"))
+        print(temp_image.name)
         chosen_filter = globals()[self.filter_to_be_applied](temp_image.name, image.size[0], image.size[1])
         chosen_filter.apply()
         image = Image.open(temp_image)
@@ -97,7 +98,6 @@ class Freeze(ColorFilter):
     def apply(self):
         amount = 13
         fact = execute_command('convert xc: -format "%[fx:{amount}/100]" info:', amount=amount)
-        print(fact)
         execute_command('convert {filename} -set colorspace RGB\
                         \( +clone -fill "blue" -colorize 100% \) \
                         \( -clone 0 -modulate 100,0,100 -solarize 50% -level 0x50% -evaluate multiply "{fact}" \) \
