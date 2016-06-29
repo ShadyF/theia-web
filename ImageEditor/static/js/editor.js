@@ -2,13 +2,16 @@
 /*TODO: Seperate everything*/
 /*TODO: Save image after drawing */
 /*TODO: Add a radio button to either keep original image size or scale down to fit page */
+/*TODO: Fix drawing and using the same last operation erasing what was drawn on canvas*/
+
 $(function () {
     "use strict";
     var canvas = document.getElementsByTagName("canvas")[0];
-    var ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d')
     var current_image = new Image();
     requestImageOperation('reset/', null);
     var draw = false;
+    var canvas_drawn_on = false;
     var canvas_wrapper = $("#canvas-wrapper")[0];
     var all_popovers = $('[data-toggle="popover"]');
 
@@ -30,6 +33,7 @@ $(function () {
         else
             $(canvas).css('cursor', 'default');
         draw = !draw;
+        canvas_drawn_on = true;
     });
 
     /*###############################################*/
@@ -38,11 +42,22 @@ $(function () {
     $('#imageLoader').on('change', uploadImageFromForm);
 
     $('.btn-reset').click(function () {
+        canvas_drawn_on = false;
         requestImageOperation('reset/', null);
     });
     $('.btn-download').click(function () {
-        console.log(current_image.width);
-        var dataURL = canvas.toDataURL('image/png');
+        var dataURL = null;
+        if (!canvas_drawn_on && current_image != null) {
+            var temp_canvas = document.createElement('canvas');
+            var temp_canvas_ctx = temp_canvas.getContext('2d');
+            temp_canvas.width = current_image.width;
+            temp_canvas.height = current_image.height;
+            temp_canvas_ctx.drawImage(current_image, 0, 0, temp_canvas.width, temp_canvas.height);
+            dataURL = temp_canvas.toDataURL();
+        }
+        else
+            dataURL = canvas.toDataURL('image/png');
+
         $(this)[0].href = dataURL;
     });
     $(".tint").click(function () {
@@ -86,6 +101,7 @@ $(function () {
 
     function uploadImageFromForm(event) {
         var reader = new FileReader();
+        canvas_drawn_on = false;
         reader.onload = function (theFile) {
             var img = new Image();
             img.src = theFile.target.result;
@@ -103,9 +119,18 @@ $(function () {
 
 
     function requestImageOperation(op_url, op_params) {
-        var dataURL = canvas.toDataURL();
+        var dataURL = null;
         var op_data = null;
-
+        if (!canvas_drawn_on && current_image != null) {
+            var temp_canvas = document.createElement('canvas');
+            var temp_canvas_ctx = temp_canvas.getContext('2d');
+            temp_canvas.width = current_image.width;
+            temp_canvas.height = current_image.height;
+            temp_canvas_ctx.drawImage(current_image, 0, 0, temp_canvas.width, temp_canvas.height);
+            dataURL = temp_canvas.toDataURL();
+        }
+        else
+            dataURL = canvas.toDataURL();
         if (op_url != 'reset/')
             op_data = {
                 imgBase64: dataURL,
