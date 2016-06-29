@@ -99,6 +99,8 @@ class ImageUploadHandler(View):
 
 def reset_image(request):
     if request.method == 'POST':
+        global LAST_OPERATION
+        LAST_OPERATION = ""
         try:
             original_image = request.session['original_image_base64']
         except KeyError:
