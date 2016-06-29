@@ -104,5 +104,5 @@ def reset_image(request):
         except KeyError:
             raise Http404("Image could not be reset")
 
-        request.session['current_iamge_base64'] = original_image
+        request.session['current_image_base64'] = original_image
         return JsonResponse({'processed_image': original_image})
