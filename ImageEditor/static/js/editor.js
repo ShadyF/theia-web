@@ -7,6 +7,7 @@ $(function () {
     var canvas = document.getElementsByTagName("canvas")[0];
     var ctx = canvas.getContext('2d');
     var current_image = new Image();
+    current_image.width = current_image.height = 500;
     var draw = false;
     var canvas_wrapper = $("#canvas-wrapper")[0];
     var all_popovers = $('[data-toggle="popover"]');
@@ -33,11 +34,12 @@ $(function () {
 
     /*###############################################*/
 
+    $(window).on('resize', redrawCanvas);
     $('#imageLoader').on('change', uploadImageFromForm);
+
     $('.btn-reset').click(function () {
         requestImageOperation('reset/', null);
     });
-    $(window).on('resize', redrawCanvas);
     $(".tint").click(function () {
         requestImageOperation($(this).data('operation') + '/', $(this).data('tint_name'));
     });
@@ -88,7 +90,7 @@ $(function () {
             });
             img.onload = function () {
                 current_image = img;
-                redrawCanvas()
+                redrawCanvas();
             };
         };
         reader.readAsDataURL(event.target.files[0]);
@@ -121,34 +123,45 @@ $(function () {
 
         wrapper.one(' otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            var divHeight = canvas_wrapper.clientHeight;
-            var divWidth = canvas_wrapper.clientWidth;
-            var yScale = divHeight / current_image.height;
-            var xScale = divWidth / current_image.width;
+            var divHeight = canvas_wrapper.offsetHeight - 30;
+            var divWidth = canvas_wrapper.offsetWidth - 30;
+            var aspectRatio = current_image.width / current_image.height;
 
             var newImgHeight = current_image.height;
             var newImgWidth = current_image.width;
 
-            if (newImgHeight > divHeight) {
-                newImgHeight = current_image.height * xScale;
-                newImgWidth = divWidth;
+            if (newImgHeight > divHeight && newImgWidth > divWidth) {
+                if (newImgHeight > newImgWidth) {
+                    newImgHeight = divHeight;
+                    newImgWidth = newImgHeight * aspectRatio;
+                }
+                else {
+                    newImgWidth = divWidth;
+                    newImgHeight = newImgWidth / aspectRatio;
+                }
             }
             else if (newImgWidth > divWidth) {
-                newImgHeight = divHeight;
-                newImgWidth = current_image.width * yScale;
+                newImgWidth = divWidth;
+                newImgHeight = newImgWidth / aspectRatio;
             }
-            canvas.width = newImgWidth - 15;
-            canvas.height = newImgHeight - 15;
+            else if (newImgHeight > divHeight) {
+                newImgHeight = divHeight;
+                newImgWidth = newImgHeight * aspectRatio;
+            }
+            canvas.width = newImgWidth;
+            canvas.height = newImgHeight;
             ctx.drawImage(current_image, 0, 0, canvas.width, canvas.height);
         })
     });
 
     window.onload = function () {
-        var rect = canvas.parentNode.getBoundingClientRect();
-        canvas.width = rect.width - 15;
-        canvas.height = rect.height - 15;
-        current_image.height = canvas.height;
-        current_image.width = canvas.width;
+        var divHeight = canvas_wrapper.clientHeight - 30;
+        var divWidth = canvas_wrapper.clientWidth - 30;
+        canvas.height = divHeight + 600;
+        canvas.width = divWidth + 600;
+        current_image.height = divHeight;
+        current_image.width = divWidth;
+        redrawCanvas()
     };
 
 
@@ -165,23 +178,33 @@ $(function () {
         redrawCanvas();
     }
 
+    /*TODO: Take into account the aspect ratio of the div aswell as the canvas overflows, in some cases, when image is large*/
     function redrawCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var divHeight = canvas_wrapper.clientHeight;
-        var divWidth = canvas_wrapper.clientWidth;
-        var yScale = divHeight / current_image.height;
-        var xScale = divWidth / current_image.width;
+        var divHeight = canvas_wrapper.clientHeight - 30;
+        var divWidth = canvas_wrapper.clientWidth - 30;
+        var aspectRatio = current_image.width / current_image.height;
 
         var newImgHeight = current_image.height;
         var newImgWidth = current_image.width;
 
-        if (newImgHeight > divHeight) {
-            newImgHeight = current_image.height * xScale;
-            newImgWidth = divWidth;
+        if (newImgHeight > divHeight && newImgWidth > divWidth) {
+            if (newImgHeight > newImgWidth) {
+                newImgHeight = divHeight;
+                newImgWidth = newImgHeight * aspectRatio;
+            }
+            else {
+                newImgWidth = divWidth;
+                newImgHeight = newImgWidth / aspectRatio;
+            }
         }
         else if (newImgWidth > divWidth) {
+            newImgWidth = divWidth;
+            newImgHeight = newImgWidth / aspectRatio;
+        }
+        else if (newImgHeight > divHeight) {
             newImgHeight = divHeight;
-            newImgWidth = current_image.width * yScale;
+            newImgWidth = newImgHeight * aspectRatio;
         }
         canvas.width = newImgWidth;
         canvas.height = newImgHeight;
