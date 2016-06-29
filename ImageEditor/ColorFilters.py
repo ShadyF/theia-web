@@ -93,6 +93,20 @@ class SummerTouch(ColorFilter):
                         -auto-gamma {filename}', filename=self.file_path)
 
 
+class Freeze(ColorFilter):
+    def apply(self):
+        amount = 13
+        fact = execute_command('convert xc: -format "%[fx:{amount}/100]" info:', amount=amount)
+        print(fact)
+        execute_command('convert {filename} \
+                        \( +clone -fill "blue" -colorize 100% \) \
+                        \( -clone 0 -modulate 100,0,100 -solarize 50% -level 0x50% -evaluate multiply "{fact}" \) \
+                        -compose overlay -composite {filename}',
+                        filename=self.file_path,
+                        fact=fact
+                        )
+
+
 ##############################################################
 ##                    HELPER FUNCTIONS                      ##
 ##############################################################
@@ -101,10 +115,12 @@ class SummerTouch(ColorFilter):
 def execute_command(command, **kwargs):
     args_format = dict(kwargs.items())
     command = command.format(**args_format)
+    output = None
     try:
-        check_output(command, shell=True, stderr=STDOUT)
+        output = check_output(command, shell=True, stderr=STDOUT)
     except CalledProcessError as e:
         error = e.output
         print(e)
         print('\n')
         print(error)
+    return output.decode('UTF-8')
