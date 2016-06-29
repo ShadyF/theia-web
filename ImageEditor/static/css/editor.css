@@ -297,6 +297,16 @@ canvas {
     color: white;
 }
 
+.btn-download:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.btn-download:active {
+    color: white;
+    text-decoration: none;
+}
+
 .btn-download {
     width: 95%;
     letter-spacing: 0.2em;
@@ -304,6 +314,7 @@ canvas {
     border: 5px solid ghostwhite;
     background-color: inherit;
     margin: 10px 0 0 0;
+    color: white;
 }
 
 .sidebar-upper header h1 {

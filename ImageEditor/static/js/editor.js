@@ -1,6 +1,7 @@
 /*TODO: Fix enhancement buttons needing two clicks to trigger*/
 /*TODO: Seperate everything*/
 /*TODO: Save image after drawing */
+/*TODO: Add a radio button to either keep original image size or scale down to fit page */
 $(function () {
     "use strict";
     var canvas = document.getElementsByTagName("canvas")[0];
@@ -38,6 +39,11 @@ $(function () {
 
     $('.btn-reset').click(function () {
         requestImageOperation('reset/', null);
+    });
+    $('.btn-download').click(function () {
+        console.log(current_image.width);
+        var dataURL = canvas.toDataURL('image/png');
+        $(this)[0].href = dataURL;
     });
     $(".tint").click(function () {
         requestImageOperation($(this).data('operation') + '/', $(this).data('tint_name'));

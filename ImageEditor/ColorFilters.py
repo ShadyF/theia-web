@@ -13,9 +13,7 @@ class FilterManager:
 
     def process(self, image):
         temp_image = NamedTemporaryFile(mode='w+b')
-        print(image.format)
         image.save(temp_image, format("JPEG"))
-        print(temp_image.name)
         chosen_filter = globals()[self.filter_to_be_applied](temp_image.name, image.size[0], image.size[1])
         chosen_filter.apply()
         image = Image.open(temp_image)
