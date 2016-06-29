@@ -119,14 +119,18 @@ class Clarendon(ColorFilter):
                         )
 
 
-class EarlyBird(ColorFilter):
+class Catalyst(ColorFilter):
     def apply(self):
         self.colortone('#D0BA8E', 10, False)
         execute_command('convert {filename}\
-                        +contrast -modulate 105,115,100 -auto-gamma {filename}',
+                        -modulate 105,115,100 -auto-gamma {filename}',
                         filename=self.file_path,
                         )
         self.apply_viginette('#d0ba8e', '#360309', 1.5)
+        execute_command('convert {filename}\
+                        -modulate 110,100,100 -contrast -contrast {filename}',
+                        filename=self.file_path,
+                        )
 
 
 class Chamoul(ColorFilter):
@@ -148,6 +152,8 @@ class HippieFire(ColorFilter):
                          -evaluate set 25% +channel \) \
                         -compose screen -composite {filename}',
                         filename=self.file_path)
+
+
 ##############################################################
 ##                    HELPER FUNCTIONS                      ##
 ##############################################################
