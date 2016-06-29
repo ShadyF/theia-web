@@ -3,11 +3,10 @@
 /*TODO: Save image after drawing */
 $(function () {
     "use strict";
-
     var canvas = document.getElementsByTagName("canvas")[0];
     var ctx = canvas.getContext('2d');
     var current_image = new Image();
-    current_image.width = current_image.height = 500;
+    requestImageOperation('reset/', null);
     var draw = false;
     var canvas_wrapper = $("#canvas-wrapper")[0];
     var all_popovers = $('[data-toggle="popover"]');
