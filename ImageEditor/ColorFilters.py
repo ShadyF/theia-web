@@ -69,7 +69,7 @@ class ColorFilter:
 
 class Ashes(ColorFilter):
     def apply(self):
-        execute_command("convert {filename} -modulate 120,10,100 -fill '#222b6d' -colorize 20\
+        execute_command("convert {filename} -set colorspace RGB -modulate 120,10,100 -fill '#222b6d' -colorize 20\
                      -gamma 0.5 -contrast -contrast {filename}", filename=self.file_path)
 
 
@@ -77,7 +77,7 @@ class Toaster(ColorFilter):
     def apply(self):
         self.colortone('#330000', 100, True)
 
-        execute_command('convert {filename} -modulate 150,80,100 -gamma 1.2\
+        execute_command('convert {filename} -set colorspace RGB -modulate 150,80,100 -gamma 1.2\
                         -contrast -contrast {filename}',
                         filename=self.file_path)
         self.apply_viginette('none', 'LavenderBlush3', 1.5)
@@ -86,10 +86,10 @@ class Toaster(ColorFilter):
 
 class SummerTouch(ColorFilter):
     def apply(self):
-        self.colortone('#222b6d', 100, True)  # Change blacks to indigo
-        self.colortone('#f7daae', 100, False)  # Change whites to peach
+        self.colortone('#222b6d', 80, True)  # Change blacks to indigo
+        self.colortone('#f7daae', 80, False)  # Change whites to peach
 
-        execute_command('convert {filename} -contrast -modulate 100,150,100\
+        execute_command('convert {filename} -set colorspace RGB -contrast -modulate 100,150,100\
                         -auto-gamma {filename}', filename=self.file_path)
 
 
@@ -98,7 +98,7 @@ class Freeze(ColorFilter):
         amount = 13
         fact = execute_command('convert xc: -format "%[fx:{amount}/100]" info:', amount=amount)
         print(fact)
-        execute_command('convert {filename} \
+        execute_command('convert {filename} -set colorspace RGB\
                         \( +clone -fill "blue" -colorize 100% \) \
                         \( -clone 0 -modulate 100,0,100 -solarize 50% -level 0x50% -evaluate multiply "{fact}" \) \
                         -compose overlay -composite {filename}',
@@ -107,6 +107,47 @@ class Freeze(ColorFilter):
                         )
 
 
+class Clarendon(ColorFilter):
+    def apply(self):
+        execute_command('convert\
+                        {filename} -set colorspace RGB\
+                        \( -clone 0 -fill "#7fbbe3" -colorize 60% \)\
+                        \( -clone 0 -colorspace gray -negate \)\
+                        -compose overlay -composite \
+                        -modulate 100,135,100 -contrast {filename}',
+                        filename=self.file_path,
+                        )
+
+
+class EarlyBird(ColorFilter):
+    def apply(self):
+        self.colortone('#D0BA8E', 10, False)
+        execute_command('convert {filename}\
+                        +contrast -modulate 105,115,100 -auto-gamma {filename}',
+                        filename=self.file_path,
+                        )
+        self.apply_viginette('#d0ba8e', '#360309', 1.5)
+
+
+class Chamoul(ColorFilter):
+    def apply(self):
+        execute_command('convert {filename} \
+                        \( -clone 0 -fill "#a0a0a0" -colorize 100% \)\
+                        -compose soft-light -composite\
+                        -colorspace gray -contrast -modulate 110,100,100 \
+                        \( -clone 0 -fill "#383838" -colorize 100% \) \
+                        -compose lighten -composite {filename}',
+                        filename=self.file_path)
+
+
+class HippieFire(ColorFilter):
+    def apply(self):
+        execute_command('convert {filename}\
+                        -contrast -modulate 110,130,100\
+                        \( +clone -fill "#F36ABC" -colorize 100% -alpha set -channel a \
+                         -evaluate set 25% +channel \) \
+                        -compose screen -composite {filename}',
+                        filename=self.file_path)
 ##############################################################
 ##                    HELPER FUNCTIONS                      ##
 ##############################################################
