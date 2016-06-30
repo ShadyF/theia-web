@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.http import JsonResponse, Http404
+from silk.profiling.profiler import silk_profile
 
 from .Transformations import *
 from .Tints import Tint
@@ -46,8 +47,7 @@ class ImageOperation(View):
         # This solves the scenario where the user is testing out different values of sharpness, for examaple
         # as updating the image for each harpness change would cause the sharpness enhancement to be applied to
         # a previously sharpened image.
-
-        if request.session['LAST_OPERATION'] != operation_type:
+        if request.session.get('LAST_OPERATION') != operation_type:
             request.session['LAST_OPERATION'] = operation_type
             image_base64 = request.session.get('current_image_base64')
             request.session['pre_operation_image_base64'] = image_base64
@@ -60,7 +60,7 @@ class ImageOperation(View):
 
         # Instantiate the approrpriate image operation
         class_to_instantiate = get_object_or_404(ImageFunction, display_name=operation_type).class_name
-        operation = class_dict[class_to_instantiate](request.POST['params'])
+        operation = class_dict[class_to_instantiate](request.POST.get('params'))
 
         # process the current image
         output_image = operation.process(image)
