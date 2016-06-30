@@ -33,7 +33,7 @@ class ColorFilter:
 
         execute_command(
             'convert\
-            {filename} -set colorspace RGB\
+            {filename} \
             \( -clone 0 -fill "{color}" -colorize 100% \)\
             \( -clone 0 -colorspace gray {negate} \)\
             -compose blend -define compose:args={arg0},{arg1} -composite\
@@ -68,7 +68,7 @@ class ColorFilter:
 
 class Ashes(ColorFilter):
     def apply(self):
-        execute_command("convert {filename} -set colorspace RGB -modulate 120,10,100 -fill '#222b6d' -colorize 20\
+        execute_command("convert {filename} -modulate 120,10,100 -fill '#222b6d' -colorize 20\
                      -gamma 0.5 -contrast -contrast {filename}", filename=self.file_path)
 
 
@@ -76,7 +76,7 @@ class Toaster(ColorFilter):
     def apply(self):
         self.colortone('#330000', 100, True)
 
-        execute_command('convert {filename} -set colorspace RGB -modulate 150,80,100 -gamma 1.2\
+        execute_command('convert {filename} -modulate 150,80,100 -gamma 1.2\
                         -contrast -contrast {filename}',
                         filename=self.file_path)
         self.apply_viginette('none', 'LavenderBlush3', 1.5)
@@ -88,7 +88,7 @@ class SummerTouch(ColorFilter):
         self.colortone('#222b6d', 80, True)  # Change blacks to indigo
         self.colortone('#f7daae', 80, False)  # Change whites to peach
 
-        execute_command('convert {filename} -set colorspace RGB -contrast -modulate 100,150,100\
+        execute_command('convert {filename} -contrast -modulate 100,150,100\
                         -auto-gamma {filename}', filename=self.file_path)
 
 
@@ -108,7 +108,7 @@ class Freeze(ColorFilter):
 class Clarendon(ColorFilter):
     def apply(self):
         execute_command('convert\
-                        {filename} -set colorspace RGB\
+                        {filename} \
                         \( -clone 0 -fill "#7fbbe3" -colorize 60% \)\
                         \( -clone 0 -colorspace gray -negate \)\
                         -compose overlay -composite \
