@@ -13,10 +13,10 @@ class FilterManager:
 
     def process(self, image):
         temp_image = NamedTemporaryFile(mode='w+b')
-        image.save(temp_image, format("PNG"))
+        image.save(temp_image, format("JPEG"))
         chosen_filter = globals()[self.filter_to_be_applied](temp_image.name, image.size[0], image.size[1])
         chosen_filter.apply()
-        image = Image.open(temp_image)
+        image = Image.open(temp_image.name)
         return image
 
 
@@ -89,7 +89,7 @@ class SummerTouch(ColorFilter):
         self.colortone('#f7daae', 80, False)  # Change whites to peach
 
         execute_command('convert {filename} -contrast -modulate 100,150,100\
-                        -auto-gamma {filename}', filename=self.file_path)
+                        -auto-gamma {filename}.png', filename=self.file_path)
 
 
 class Freeze(ColorFilter):
