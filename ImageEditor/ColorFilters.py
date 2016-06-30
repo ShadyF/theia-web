@@ -13,7 +13,7 @@ class FilterManager:
 
     def process(self, image):
         temp_image = NamedTemporaryFile(mode='w+b')
-        image.save(temp_image, format("JPEG"))
+        image.save(temp_image, format("PNG"))
         chosen_filter = globals()[self.filter_to_be_applied](temp_image.name, image.size[0], image.size[1])
         chosen_filter.apply()
         image = Image.open(temp_image)
@@ -74,7 +74,7 @@ class Ashes(ColorFilter):
 
 class Toaster(ColorFilter):
     def apply(self):
-        self.colortone('#330000', 100, True)
+        self.colortone('#330000', 70, True)
 
         execute_command('convert {filename} -modulate 150,80,100 -gamma 1.2\
                         -contrast -contrast {filename}',
