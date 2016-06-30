@@ -105,12 +105,11 @@ class ImageUploadHandler(View):
 
 def reset_image(request):
     if request.method == 'POST':
-        global LAST_OPERATION
-        LAST_OPERATION = ""
         try:
             original_image = request.session['original_image_base64']
         except KeyError:
             raise Http404("Image could not be reset")
 
+        request.session['pre_operation_image_base64'] = original_image
         request.session['current_image_base64'] = original_image
         return JsonResponse({'processed_image': original_image})
