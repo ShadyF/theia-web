@@ -52,10 +52,10 @@ $(function () {
             temp_canvas.width = current_image.width;
             temp_canvas.height = current_image.height;
             temp_canvas_ctx.drawImage(current_image, 0, 0, temp_canvas.width, temp_canvas.height);
-            dataURL = temp_canvas.toDataURL();
+            dataURL = temp_canvas.toDataURL('image/jpeg');
         }
         else
-            dataURL = canvas.toDataURL('image/png');
+            dataURL = canvas.toDataURL('image/jpeg');
 
         $(this)[0].href = dataURL;
     });
@@ -103,7 +103,9 @@ $(function () {
         canvas_drawn_on = false;
         reader.onload = function (theFile) {
             var img = new Image();
+            var temp_img = new Image();
             img.src = theFile.target.result;
+            img.src = jic.compress(img, 70, 'png').src;
 
             $.ajax({
                 url: 'upload/',
