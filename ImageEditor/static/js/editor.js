@@ -7,14 +7,13 @@
 $(function () {
     "use strict";
     var canvas = document.getElementsByTagName("canvas")[0];
-    var ctx = canvas.getContext('2d')
+    var ctx = canvas.getContext('2d');
     var current_image = new Image();
-    requestImageOperation('reset/', null);
     var draw = false;
     var canvas_drawn_on = false;
     var canvas_wrapper = $("#canvas-wrapper")[0];
     var all_popovers = $('[data-toggle="popover"]');
-
+    var imageLoader = $('#imageLoader');
     /*###############################################
      ##        DRAWING RELATED FUNCTIONS          ##
      ###############################################*/
@@ -39,7 +38,7 @@ $(function () {
     /*###############################################*/
 
     $(window).on('resize', redrawCanvas);
-    $('#imageLoader').on('change', uploadImageFromForm);
+    imageLoader.on('change', uploadImageFromForm);
 
     $('.btn-reset').click(function () {
         canvas_drawn_on = false;
@@ -106,42 +105,37 @@ $(function () {
             var img = new Image();
             img.src = theFile.target.result;
 
-            $.post("upload/", {
-                imgBase64: theFile.target.result
+            $.ajax({
+                url: 'upload/',
+                type: 'POST',
+                dataType: 'json',
+                data: {imgBase64: theFile.target.result},
+                beforeSend: function (xhr, settings) {
+                    $.ajaxSettings.beforeSend(xhr, settings);
+                    $('.btn-browse').html("Uploading<input type='file' id='imageLoader' style='display: none;'>");
+                },
+                success: function () {
+                    $('.btn-browse').html("Browse<input type='file' id='imageLoader' style='display: none;'>");
+                    imageLoader = $('#imageLoader');
+                    imageLoader.on('change', uploadImageFromForm);
+                    updateCurrentImage({processed_image: theFile.target.result})
+                }
             });
-            img.onload = function () {
-                current_image = img;
-                redrawCanvas();
-            };
         };
         reader.readAsDataURL(event.target.files[0]);
     }
 
 
     function requestImageOperation(op_url, op_params) {
-        var dataURL = null;
-        var op_data = null;
-        if (!canvas_drawn_on && current_image != null) {
-            var temp_canvas = document.createElement('canvas');
-            var temp_canvas_ctx = temp_canvas.getContext('2d');
-            temp_canvas.width = current_image.width;
-            temp_canvas.height = current_image.height;
-            temp_canvas_ctx.drawImage(current_image, 0, 0, temp_canvas.width, temp_canvas.height);
-            dataURL = temp_canvas.toDataURL();
-        }
-        else
-            dataURL = canvas.toDataURL();
-        if (op_url != 'reset/')
-            op_data = {
-                imgBase64: dataURL,
-                params: op_params
-            };
+        var op_data = {params: op_params};
 
         $.ajax({
             url: op_url,
             type: 'POST',
             data: op_data,
-            success: updateCurrentImage
+            success: function (json) {
+                updateCurrentImage(json)
+            }
         });
     }
 

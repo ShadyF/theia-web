@@ -285,7 +285,7 @@ canvas {
 
 .btn-side {
     width: 45%;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     border-radius: 0;
     border: 5px solid ghostwhite;
     background-color: inherit;
@@ -309,7 +309,7 @@ canvas {
 
 .btn-download {
     width: 95%;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     border-radius: 0;
     border: 5px solid ghostwhite;
     background-color: inherit;

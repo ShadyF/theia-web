@@ -46,12 +46,15 @@ class ImageOperation(View):
         # This solves the scenario where the user is testing out different values of sharpness, for examaple
         # as updating the image for each harpness change would cause the sharpness enhancement to be applied to
         # a previously sharpened image.
-        global LAST_OPERATION
-        if LAST_OPERATION != operation_type:
-            LAST_OPERATION = operation_type
-            request.session['current_image_base64'] = request.POST.get('imgBase64')
 
-        image_base64 = request.session.get('current_image_base64')
+        if request.session['LAST_OPERATION'] != operation_type:
+            request.session['LAST_OPERATION'] = operation_type
+            image_base64 = request.session.get('current_image_base64')
+            request.session['pre_operation_image_base64'] = image_base64
+
+        else:
+            image_base64 = request.session.get('pre_operation_image_base64')
+
         image_bytes = self.decode_base64_image(image_base64)
         image = Image.open(image_bytes)
 
@@ -62,6 +65,7 @@ class ImageOperation(View):
         # process the current image
         output_image = operation.process(image)
         output_image_base64 = self.encode_base64_image(output_image, self.format)
+        request.session['current_image_base64'] = output_image_base64
 
         image.close()
 
@@ -90,7 +94,9 @@ class ImageOperation(View):
 
 class ImageUploadHandler(View):
     def post(self, request):
+        request.session['LAST_OPERATION'] = ""
         request.session['original_image_base64'] = request.POST['imgBase64']
+        request.session['pre_operation_image_base64'] = request.POST['imgBase64']
         request.session['current_image_base64'] = request.POST['imgBase64']
         request.session.set_expiry(0)
 
