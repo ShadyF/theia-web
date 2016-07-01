@@ -66,6 +66,9 @@ $(function () {
     $(".color-filter").click(function () {
         requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'));
     });
+    $(".kernel-filter").click(function () {
+        requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'));
+    });
 
     $('.nav-tabs a').click(function (e) {
         e.preventDefault();

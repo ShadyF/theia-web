@@ -3,7 +3,7 @@ from .models import KernelFilter as KernelFilterModel
 from PIL import ImageFilter
 
 
-class KernelFilterApllier:
+class KernelFilterApplier:
     def __init__(self, filter_name):
         filter_model = get_object_or_404(KernelFilterModel, name=filter_name)
         self.filter_to_be_applied = filter_model.class_name

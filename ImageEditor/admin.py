@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import ColorTint, ColorFilter, ImageFunction
+from .models import ColorTint, ColorFilter, KernelFilter, ImageFunction
 from django.contrib.sessions.models import Session
 
 admin.site.register(ColorTint)
 admin.site.register(ColorFilter)
+admin.site.register(KernelFilter)
 admin.site.register(ImageFunction)
 
 
