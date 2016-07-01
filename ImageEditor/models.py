@@ -19,6 +19,14 @@ class ColorFilter(models.Model):
         return self.name
 
 
+class KernelFilter(models.Model):
+    name = models.CharField(max_length=20)
+    class_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
 class ImageFunction(models.Model):
     FUNCTION_TYPES = (
         ('Transform', 'Transform'),
