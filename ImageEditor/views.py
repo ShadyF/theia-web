@@ -14,8 +14,6 @@ from io import BytesIO
 from PIL import Image
 from base64 import b64encode, b64decode
 
-LAST_OPERATION = ""
-
 
 class Editor(View):
     template_name = 'ImageEditor/editor.html'
@@ -111,4 +109,5 @@ def reset_image(request):
 
         request.session['pre_operation_image_base64'] = original_image
         request.session['current_image_base64'] = original_image
+
         return JsonResponse({'processed_image': original_image})
