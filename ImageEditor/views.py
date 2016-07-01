@@ -5,7 +5,7 @@ from django.http import JsonResponse, Http404
 from .Transformations import *
 from .Tints import Tint
 from .Enhancements import *
-from .KernelFilters import *
+from .KernelFilters import KernelFilterApllier
 from .ColorFilters import FilterManager
 from .models import ColorTint, ColorFilter, ImageFunction
 

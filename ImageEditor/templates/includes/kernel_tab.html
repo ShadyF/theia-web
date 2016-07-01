@@ -1,1 +1,8 @@
-<div role="tabpanel" class="tab-pane" id="kernelfilter">TO BE IMPLEMENTED</div>
+<div role="tabpanel" class="tab-pane" id="tints">
+    {% for filter in kernelfilters %}
+        <button type="button" class="btn btn-default kernel-filter btn-tabpane" data-operation=KernelFilter
+                data-tint_name={{ filter.name }}>
+            {{ filter.name|capfirst }}
+        </button>
+    {% endfor %}
+</div>
