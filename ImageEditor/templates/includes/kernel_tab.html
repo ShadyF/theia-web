@@ -2,7 +2,7 @@
     {% for filter in kernel_filters %}
         <button type="button" class="btn btn-default kernel-filter btn-tabpane" data-operation=KernelFilter
                 data-filter_name={{ filter.name }}>
-            {{ filter.name|capfirst }}
+            {{ filter.display_name|capfirst }}
         </button>
     {% endfor %}
 </div>

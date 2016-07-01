@@ -21,6 +21,7 @@ class ColorFilter(models.Model):
 
 class KernelFilter(models.Model):
     name = models.CharField(max_length=20)
+    display_name = models.CharField(max_length=20)
     class_name = models.CharField(max_length=30)
 
     def __str__(self):
