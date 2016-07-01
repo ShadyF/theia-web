@@ -46,18 +46,6 @@ $(function () {
     });
     $('.btn-download').click(function () {
         var dataURL = null;
-        if (!canvas_drawn_on && current_image != null) {
-            var temp_canvas = document.createElement('canvas');
-            var temp_canvas_ctx = temp_canvas.getContext('2d');
-            temp_canvas.width = current_image.width;
-            temp_canvas.height = current_image.height;
-            temp_canvas_ctx.drawImage(current_image, 0, 0, temp_canvas.width, temp_canvas.height);
-            dataURL = temp_canvas.toDataURL('image/jpeg');
-        }
-        else
-            dataURL = canvas.toDataURL('image/jpeg');
-
-        $(this)[0].href = dataURL;
     });
     $(".tint").click(function () {
         requestImageOperation($(this).data('operation') + '/', $(this).data('tint_name'));
