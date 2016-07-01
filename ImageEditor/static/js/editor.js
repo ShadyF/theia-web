@@ -105,13 +105,12 @@ $(function () {
             var img = new Image();
             var temp_img = new Image();
             img.src = theFile.target.result;
-            img.src = jic.compress(img, 70, 'png').src;
-
+            temp_img.src = jic.compress(img, 70, 'jpeg').src;
             $.ajax({
                 url: 'upload/',
                 type: 'POST',
                 dataType: 'json',
-                data: {imgBase64: theFile.target.result},
+                data: {imgBase64: temp_img.src},
                 beforeSend: function (xhr, settings) {
                     $.ajaxSettings.beforeSend(xhr, settings);
                     $('.btn-browse').html("Uploading<input type='file' id='imageLoader' style='display: none;'>");
@@ -120,7 +119,7 @@ $(function () {
                     $('.btn-browse').html("Browse<input type='file' id='imageLoader' style='display: none;'>");
                     imageLoader = $('#imageLoader');
                     imageLoader.on('change', uploadImageFromForm);
-                    updateCurrentImage({processed_image: theFile.target.result})
+                    updateCurrentImage({processed_image: temp_img.src})
                 }
             });
         };

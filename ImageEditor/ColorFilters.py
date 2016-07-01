@@ -4,6 +4,7 @@ from .models import ColorFilter as ColorFilterModel
 from django.shortcuts import get_object_or_404
 from tempfile import NamedTemporaryFile
 from math import floor
+from os import remove
 
 
 class FilterManager:
@@ -14,9 +15,13 @@ class FilterManager:
     def process(self, image):
         temp_image = NamedTemporaryFile(mode='w+b')
         image.save(temp_image, format("JPEG"))
-        chosen_filter = globals()[self.filter_to_be_applied](temp_image.name, image.size[0], image.size[1])
+        execute_command('convert {filename} {filename}.mpc', filename=temp_image.name)
+        chosen_filter = globals()[self.filter_to_be_applied](temp_image.name + ".mpc", image.size[0], image.size[1])
         chosen_filter.apply()
-        image = Image.open(temp_image.name)
+        execute_command('convert {filename}.mpc {filename}.jpeg', filename=temp_image.name)
+        image = Image.open(temp_image.name + '.jpeg')
+        remove(temp_image.name + ".jpeg")
+        temp_image.close()
         return image
 
 
@@ -89,7 +94,7 @@ class SummerTouch(ColorFilter):
         self.colortone('#f7daae', 80, False)  # Change whites to peach
 
         execute_command('convert {filename} -contrast -modulate 100,150,100\
-                        -auto-gamma {filename}.png', filename=self.file_path)
+                        -auto-gamma {filename}', filename=self.file_path)
 
 
 class Freeze(ColorFilter):
@@ -144,11 +149,11 @@ class Chamoul(ColorFilter):
 
 class HippieFire(ColorFilter):
     def apply(self):
-        execute_command('convert {filename}\
+        execute_command('convert {filename} \
                         -contrast -modulate 110,130,100\
                         \( +clone -fill "#F36ABC" -colorize 100% -alpha set -channel a \
                          -evaluate set 25% +channel \) \
-                        -compose screen -composite {filename}',
+                        -compose screen -composite  {filename}',
                         filename=self.file_path)
 
 

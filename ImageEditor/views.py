@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.http import JsonResponse, Http404
-from silk.profiling.profiler import silk_profile
 
 from .Transformations import *
 from .Tints import Tint
