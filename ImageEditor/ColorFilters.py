@@ -171,6 +171,5 @@ def execute_command(command, **kwargs):
     except CalledProcessError as e:
         error = e.output
         print(e)
-        print('\n')
         print(error)
     return output.decode('UTF-8')

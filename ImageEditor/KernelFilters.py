@@ -1,9 +1,16 @@
+from django.shortcuts import get_object_or_404
+from .models import KernelFilter as KernelFilterModel
 from PIL import ImageFilter
 
 
 class KernelFilterApllier:
-    def __init__(self):
-        pass
+    def __init__(self, filter_name):
+        filter_model = get_object_or_404(KernelFilterModel, name=filter_name)
+        self.filter_to_be_applied = filter_model.class_name
+
+    def process(self, image):
+        chosen_filter = globals()[self.filter_to_be_applied]()
+        return chosen_filter.apply(image)
 
 
 class KernelFilter:
