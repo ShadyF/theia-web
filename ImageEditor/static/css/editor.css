@@ -165,7 +165,7 @@ canvas {
     bottom: 0;
     padding-bottom: 4px;
     background: #212121;
-    border-top: 3px solid #368397;
+    border-top: 3px solid #589c5f;
     letter-spacing: 0.1em;
 }
 
@@ -173,7 +173,7 @@ canvas {
     width: 100%;
     white-space: nowrap;
     border-bottom: none;
-    border-top: 3px solid #368397;
+    border-top: 3px solid #589c5f;
     margin: 0;
     color: white;
     /* The following makes the nav tabs scrollable */
@@ -196,37 +196,43 @@ canvas {
     margin-right: 2px;
     line-height: 1.42857143;
     border: none;
-    border-radius: 0;
+    border-radius: 0 0 4px 4px;
     padding-top: 12px;
     color: white;
 }
 
 .nav > li > #transform-nav-tab:hover, .nav-tabs > li.active > #transform-nav-tab, .nav-tabs > li.active > #transform-nav-tab:focus, .nav-tabs > li.active > #transform-nav-tab:hover {
-    background: rgb(32, 103, 147);
+    background: #589c5f;
     color: white;
     border: none;
 }
 
 .nav > li > #tints-nav-tab:hover, .nav-tabs > li.active > #tints-nav-tab, .nav-tabs > li.active > #tints-nav-tab:focus, .nav-tabs > li.active > #tints-nav-tab:hover {
-    background: #7d3d9c;
+    background: #5a9c9b; /*#84539c;  #7d3d9c*/
+    color: white;
+    border: none;
+}
+
+.nav > li > #colorfilters-nav-tab:hover, .nav-tabs > li.active > #colorfilters-nav-tab, .nav-tabs > li.active > #colorfilters-nav-tab:focus, .nav-tabs > li.active > #colorfilters-nav-tab:hover {
+    background: rgb(49, 89, 156);
     color: white;
     border: none;
 }
 
 .nav > li > #adjustments-nav-tab:hover, .nav-tabs > li.active > #adjustments-nav-tab, .nav-tabs > li.active > #adjustments-nav-tab:focus, .nav-tabs > li.active > #adjustments-nav-tab:hover {
-    background: #9c4200;
+    background: #84539c;
     color: white;
     border: none;
 }
 
 .nav > li > #kernel-nav-tab:hover, .nav-tabs > li.active > #kernel-nav-tab, .nav-tabs > li.active > #kernel-nav-tab:focus, .nav-tabs > li.active > #kernel-nav-tab:hover {
-    background: #9b1814;
+    background: #9b3134;
     color: white;
     border: none;
 }
 
 .nav > li > #draw-nav-tab:hover, .nav-tabs > li.active > #draw-nav-tab, .nav-tabs > li.active > #draw-nav-tab:focus, .nav-tabs > li.active > #draw-nav-tab:hover {
-    background: #269d54;
+    background: #c56546;
     color: white;
     border: none;
 }
@@ -328,7 +334,7 @@ canvas {
 }
 
 .seperator {
-    height: 5px;
+    height: 4px;
     width: 100%;
     margin: 20px 0 20px 0;
     background: linear-gradient(90deg, rgba(107, 208, 228, 1) 0%, rgba(96, 78, 177, 1) 33%, rgba(200, 142, 102, 1) 66%, rgba(201, 85, 169, 1) 100%);
@@ -402,4 +408,45 @@ blueish #32383f; */
 
 .menu-toggle-active:after {
     transform: rotate(-90deg) !important;
+}
+
+aside footer {
+    position: absolute;
+    bottom: 0;
+    width: 250px;
+    margin: 0;
+    padding-bottom: 8px;
+    color: #959595;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(186, 186, 186, 0.75), rgba(0, 0, 0, 0));
+}
+
+.name {
+    color: #d6d6d6;
+    font-size: 16px;
+}
+
+.credits {
+    margin-bottom: 8px;
+}
+
+small {
+    font-size: 14px;
+}
+
+.link-btn, .link-btn:visited {
+    background: inherit;
+    border: none;
+    color: #BABABA;
+    font-size: 25px;
+    margin: 0 5px 0 5px;
+}
+
+.link-btn:hover, .link-btn:focus, .link-btn:active {
+    background: none;
+    color: #fbfbfb;
 }

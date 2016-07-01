@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <!-- Font Awesome -->
+    <script type='text/javascript' src="https://use.fontawesome.com/8941f711a8.js"></script>
     <!-- Bootstrap -->
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -40,7 +41,7 @@
                     <li role="presentation" class="active"><a id="transform-nav-tab" href="#transforms">Transforms</a>
                     </li>
                     <li role="presentation"><a id="tints-nav-tab" href="#tints">Tints</a></li>
-                    <li role="presentation"><a id="adjustments-nav-tab" href="#colorfilters">Color Filters</a></li>
+                    <li role="presentation"><a id="colorfilters-nav-tab" href="#colorfilters">Color Filters</a></li>
                     <li role="presentation"><a id="adjustments-nav-tab" href="#adjustments">Adjustments</a></li>
                     <li role="presentation"><a id="kernel-nav-tab" href="#kernelfilter">Kernel Filters</a></li>
                     <li role="presentation"><a id="draw-nav-tab" href="#draw">Draw</a></li>
@@ -52,11 +53,9 @@
 </div>
 <!--Main Scripts-->
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-<!-- Font Awesome -->
-<script src="https://use.fontawesome.com/8941f711a8.js"></script>
-<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/ajax_csrf.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/ajax_csrf.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/jqscribble.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/bootstrap-colorpicker.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/JIC.min.js' %}"></script>
