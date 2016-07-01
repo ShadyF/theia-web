@@ -11,6 +11,7 @@ $(function () {
     var current_image = new Image();
     var draw = false;
     var canvas_drawn_on = false;
+    var processing_image = false;
     var canvas_wrapper = $("#canvas-wrapper")[0];
     var all_popovers = $('[data-toggle="popover"]');
     var imageLoader = $('#imageLoader');
@@ -44,9 +45,7 @@ $(function () {
     imageLoader.on('change', uploadImageFromForm);
 
     $('.btn-reset').click(function () {
-        canvas_drawn_on = false;
         requestImageOperation('reset/', null, $(this));
-        ;
     });
 
     $(".tint").click(function () {
@@ -93,6 +92,9 @@ $(function () {
     });
 
     function uploadImageFromForm(event) {
+        if (processing_image)
+            return;
+        processing_image = true;
         var reader = new FileReader();
         canvas_drawn_on = false;
         reader.onload = function (theFile) {
@@ -113,6 +115,7 @@ $(function () {
                     $('.btn-browse').html("Browse<input type='file' id='imageLoader' style='display: none;'>");
                     imageLoader = $('#imageLoader');
                     imageLoader.on('change', uploadImageFromForm);
+                    processing_image = false;
                     updateCurrentImage({processed_image: temp_img.src})
                 }
             });
@@ -122,6 +125,9 @@ $(function () {
 
 
     function requestImageOperation(op_url, op_params, button) {
+        if (processing_image)
+            return;
+        processing_image = true;
         var op_data = {params: op_params};
         var original_text = button.html();
         /*var original_width = button.css('width');*/
@@ -136,6 +142,7 @@ $(function () {
             },
             success: function (json) {
                 button.html(original_text);
+                processing_image = false;
                 updateCurrentImage(json)
             }
         });
