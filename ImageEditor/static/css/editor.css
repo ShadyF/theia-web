@@ -163,7 +163,7 @@ canvas {
 .navbar-fixed-bottom {
     position: absolute;
     bottom: 0;
-    padding: 0 10px 4px 10px;
+    padding-bottom: 4px;
     background: #212121;
     border-top: 3px solid #368397;
     letter-spacing: 0.1em;
@@ -174,8 +174,7 @@ canvas {
     white-space: nowrap;
     border-bottom: none;
     border-top: 3px solid #368397;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
     color: white;
     /* The following makes the nav tabs scrollable */
     overflow-x: auto;
@@ -203,31 +202,31 @@ canvas {
 }
 
 .nav > li > #transform-nav-tab:hover, .nav-tabs > li.active > #transform-nav-tab, .nav-tabs > li.active > #transform-nav-tab:focus, .nav-tabs > li.active > #transform-nav-tab:hover {
-    background: rgb(41, 128, 185);
+    background: rgb(32, 103, 147);
     color: white;
     border: none;
 }
 
 .nav > li > #tints-nav-tab:hover, .nav-tabs > li.active > #tints-nav-tab, .nav-tabs > li.active > #tints-nav-tab:focus, .nav-tabs > li.active > #tints-nav-tab:hover {
-    background: #8e44ad;
+    background: #7d3d9c;
     color: white;
     border: none;
 }
 
 .nav > li > #adjustments-nav-tab:hover, .nav-tabs > li.active > #adjustments-nav-tab, .nav-tabs > li.active > #adjustments-nav-tab:focus, .nav-tabs > li.active > #adjustments-nav-tab:hover {
-    background: #d35400;
+    background: #9c4200;
     color: white;
     border: none;
 }
 
 .nav > li > #kernel-nav-tab:hover, .nav-tabs > li.active > #kernel-nav-tab, .nav-tabs > li.active > #kernel-nav-tab:focus, .nav-tabs > li.active > #kernel-nav-tab:hover {
-    background: #f1c40f;
+    background: #9b1814;
     color: white;
     border: none;
 }
 
 .nav > li > #draw-nav-tab:hover, .nav-tabs > li.active > #draw-nav-tab, .nav-tabs > li.active > #draw-nav-tab:focus, .nav-tabs > li.active > #draw-nav-tab:hover {
-    background: #27ae60;
+    background: #269d54;
     color: white;
     border: none;
 }
@@ -293,6 +292,11 @@ canvas {
 }
 
 .btn-side:hover, .btn-download:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn-side:focus, .btn-download:focus {
     background: rgba(255, 255, 255, 0.1);
     color: white;
 }

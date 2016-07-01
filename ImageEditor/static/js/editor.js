@@ -14,6 +14,9 @@ $(function () {
     var canvas_wrapper = $("#canvas-wrapper")[0];
     var all_popovers = $('[data-toggle="popover"]');
     var imageLoader = $('#imageLoader');
+    var nav_tabs = $('.nav-tabs');
+    var navbar = $('.navbar');
+    var tab_content = $('.tab-content');
     /*###############################################
      ##        DRAWING RELATED FUNCTIONS          ##
      ###############################################*/
@@ -42,20 +45,19 @@ $(function () {
 
     $('.btn-reset').click(function () {
         canvas_drawn_on = false;
-        requestImageOperation('reset/', null);
+        requestImageOperation('reset/', null, $(this));
+        ;
     });
-    $('.btn-download').click(function () {
-        var dataURL = null;
-    });
+
     $(".tint").click(function () {
-        requestImageOperation($(this).data('operation') + '/', $(this).data('tint_name'));
+        requestImageOperation($(this).data('operation') + '/', $(this).data('tint_name'), $(this));
     });
 
     $(".color-filter").click(function () {
-        requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'));
+        requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'), $(this));
     });
     $(".kernel-filter").click(function () {
-        requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'));
+        requestImageOperation($(this).data('operation') + '/', $(this).data('filter_name'), $(this));
     });
 
     $('.nav-tabs a').click(function (e) {
@@ -68,13 +70,14 @@ $(function () {
             placement: "top", html: true
         })
         .on('shown.bs.popover', function () {
+            var button = $(this);
             var slider = $('.slider-input');
             slider.on('input', function () {
                 $('.slider-value').text($(this).val())
             });
             slider.on('change', function (e) {
                 e.preventDefault();
-                requestImageOperation($(this).data('operation') + "/", $(this).val());
+                requestImageOperation($(this).data('operation') + "/", $(this).val(), button);
             });
         });
 
@@ -104,7 +107,7 @@ $(function () {
                 data: {imgBase64: temp_img.src},
                 beforeSend: function (xhr, settings) {
                     $.ajaxSettings.beforeSend(xhr, settings);
-                    $('.btn-browse').html("Uploading<input type='file' id='imageLoader' style='display: none;'>");
+                    $('.btn-browse').html('<i class="fa fa-cog fa-spin fa-lg"></i>');
                 },
                 success: function () {
                     $('.btn-browse').html("Browse<input type='file' id='imageLoader' style='display: none;'>");
@@ -118,14 +121,21 @@ $(function () {
     }
 
 
-    function requestImageOperation(op_url, op_params) {
+    function requestImageOperation(op_url, op_params, button) {
         var op_data = {params: op_params};
+        var original_text = button.html();
+        /*var original_width = button.css('width');*/
 
         $.ajax({
             url: op_url,
             type: 'POST',
             data: op_data,
+            beforeSend: function (xhr, settings) {
+                $.ajaxSettings.beforeSend(xhr, settings);
+                button.html('<i class="fa fa-cog fa-spin fa-lg fa-fw"></i>')
+            },
             success: function (json) {
+                button.html(original_text);
                 updateCurrentImage(json)
             }
         });
@@ -182,9 +192,10 @@ $(function () {
 
 
     /* TODO: Make tab panes have the same background color as their nav tab links */
-    $(".nav-tabs").click(function () {
-        console.log($($(".active").children('a')[0]).css('backgound-color'));
-        $(this).css.borderTopColor = $(".active").css.background
+    $(".nav-tabs > li > a").click(function () {
+        var background_color = $(this).css('background-color');
+        nav_tabs.css({'border-top-color': background_color});
+        navbar.css({'border-top-color': background_color});
     });
 
     function updateCurrentImage(json) {
