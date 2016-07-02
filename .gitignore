@@ -2,3 +2,6 @@ theiaweb/secrets.py
 .idea
 ImageEditor/__pycache__
 theiaweb/__pycache__
+venv
+*.pyc
+staticfiles
