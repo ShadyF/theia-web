@@ -132,13 +132,18 @@ html, body {
     height: calc(100% - 90px);
     width: 100%;
     overflow: auto;
+
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+
     -ms-flex-align: center;
     -webkit-align-items: center;
-    -webkit-justify-content: center;
     align-items: center;
+
+    -webkit-justify-content: center;
+    justify-content: center;
+
     box-shadow: none;
 }
 

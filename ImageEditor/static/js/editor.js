@@ -101,24 +101,28 @@ $(function () {
             var img = new Image();
             var temp_img = new Image();
             img.src = theFile.target.result;
-            temp_img.src = jic.compress(img, 70, 'jpeg').src;
-            $.ajax({
-                url: 'upload/',
-                type: 'POST',
-                dataType: 'json',
-                data: {imgBase64: temp_img.src},
-                beforeSend: function (xhr, settings) {
-                    $.ajaxSettings.beforeSend(xhr, settings);
-                    $('.btn-browse').html('<i class="fa fa-cog fa-spin fa-lg"></i>');
-                },
-                success: function () {
-                    $('.btn-browse').html("Browse<input type='file' id='imageLoader' style='display: none;'>");
-                    imageLoader = $('#imageLoader');
-                    imageLoader.on('change', uploadImageFromForm);
-                    processing_image = false;
-                    updateCurrentImage({processed_image: temp_img.src})
-                }
-            });
+            img.onload = function () {
+                temp_img.src = jic.compress(img, 70, 'jpeg').src;
+            };
+            temp_img.onload = function () {
+                $.ajax({
+                    url: 'upload/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {imgBase64: temp_img.src},
+                    beforeSend: function (xhr, settings) {
+                        $.ajaxSettings.beforeSend(xhr, settings);
+                        $('.btn-browse').html('<i class="fa fa-cog fa-spin fa-lg"></i>');
+                    },
+                    success: function () {
+                        $('.btn-browse').html("Browse<input type='file' id='imageLoader' style='display: none;'>");
+                        imageLoader = $('#imageLoader');
+                        imageLoader.on('change', uploadImageFromForm);
+                        processing_image = false;
+                        updateCurrentImage({processed_image: temp_img.src})
+                    }
+                });
+            };
         };
         reader.readAsDataURL(event.target.files[0]);
     }
@@ -208,8 +212,10 @@ $(function () {
     function updateCurrentImage(json) {
         var image = new Image();
         image.src = json.processed_image;
-        current_image = image;
-        redrawCanvas();
+        image.onload = function () {
+            current_image = image;
+            redrawCanvas();
+        }
     }
 
     /*TODO: Take into account the aspect ratio of the div aswell as the canvas overflows, in some cases, when image is large*/
