@@ -20,7 +20,7 @@ from base64 import b64encode, b64decode
 
 
 class Editor(View):
-    template_name = 'ImageEditor/editor.html'
+    template_name = 'ImageEditor/index.html'
 
     def get(self, request):
         color_tints = ColorTint.objects.all()
