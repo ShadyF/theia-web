@@ -10,7 +10,7 @@ module.exports = {
     //the entry point we created earlier. Note that './' means
     //your current directory. You don't have to specify the extension  now,
     //because you will specify extensions later in the `resolve` section
-    entry: './assets/components/app',
+    entry: './assets/app',
 
     output: {
         path: path.resolve('./build/'),

@@ -3,12 +3,12 @@
   "chunks": {
     "main": [
       {
-        "name": "main-3af55323bcfca38cd6dd.js",
-        "path": "/home/sfanous/Programming/django-projects/theiaweb/assets/bundles/main-3af55323bcfca38cd6dd.js"
+        "name": "main-5ddcc3aba17e4acbc69b.js",
+        "path": "/home/sfanous/Programming/django-projects/theiaweb/build/main-5ddcc3aba17e4acbc69b.js"
       },
       {
-        "name": "main-3af55323bcfca38cd6dd.js.map",
-        "path": "/home/sfanous/Programming/django-projects/theiaweb/assets/bundles/main-3af55323bcfca38cd6dd.js.map"
+        "name": "main-5ddcc3aba17e4acbc69b.js.map",
+        "path": "/home/sfanous/Programming/django-projects/theiaweb/build/main-5ddcc3aba17e4acbc69b.js.map"
       }
     ]
   }
