@@ -3,5 +3,6 @@ theiaweb/secrets.py
 ImageEditor/__pycache__
 theiaweb/__pycache__
 venv
+db.sqlite3
 *.pyc
 staticfiles
