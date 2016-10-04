@@ -6,3 +6,4 @@ venv
 db.sqlite3
 *.pyc
 staticfiles
+node_modules
