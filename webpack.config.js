@@ -26,7 +26,7 @@ module.exports = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
         }),
-        new ExtractTextPlugin("./build/styles.css")
+        new ExtractTextPlugin("./styles.css")
     ],
 
     module: {
