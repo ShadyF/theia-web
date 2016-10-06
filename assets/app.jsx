@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import Sidebar from './components/sidebar/sidebar'
 import Canvas from './components/canvas/canvas'
+import SidebarToggle from './components/sidebartoggle/sidebartoggle'
 
 const App = React.createClass({
     render: function () {
@@ -9,6 +10,7 @@ const App = React.createClass({
             <div>
                 <Sidebar/>
                 <Canvas/>
+                <SidebarToggle/>
             </div>
         )
     }
