@@ -1,0 +1,100 @@
+.btn-tabpane {
+    border-radius: 0;
+    background: none;
+    color: white;
+}
+
+.popover {
+    max-height: 65px;
+    text-align: center;
+    width: 200px;
+}
+
+.popover-content {
+    color: black;
+}
+
+.tab-content {
+    padding: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    color: white;
+}
+
+.navbar-fixed-bottom {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 4px;
+    background: #212121;
+    border-top: 3px solid #589c5f;
+    letter-spacing: 0.1em;
+}
+
+.nav-tabs {
+    width: 100%;
+    white-space: nowrap;
+    border-bottom: none;
+    border-top: 3px solid #589c5f;
+    margin: 0;
+    color: white;
+    /* The following makes the nav tabs scrollable */
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: -webkit-box;
+    display: -moz-box;
+}
+
+.nav-tabs > li {
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    /* Makes nav tabs scrollable*/
+    float: none;
+}
+
+.nav-tabs > li > a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: none;
+    border-radius: 0 0 4px 4px;
+    padding-top: 12px;
+    color: white;
+}
+
+.nav > li > #transform-nav-tab:hover, .nav-tabs > li.active > #transform-nav-tab, .nav-tabs > li.active > #transform-nav-tab:focus, .nav-tabs > li.active > #transform-nav-tab:hover {
+    background: #589c5f;
+    color: white;
+    border: none;
+}
+
+.nav > li > #tints-nav-tab:hover, .nav-tabs > li.active > #tints-nav-tab, .nav-tabs > li.active > #tints-nav-tab:focus, .nav-tabs > li.active > #tints-nav-tab:hover {
+    background: #5a9c9b; /*#84539c;  #7d3d9c*/
+    color: white;
+    border: none;
+}
+
+.nav > li > #colorfilters-nav-tab:hover, .nav-tabs > li.active > #colorfilters-nav-tab, .nav-tabs > li.active > #colorfilters-nav-tab:focus, .nav-tabs > li.active > #colorfilters-nav-tab:hover {
+    background: rgb(49, 89, 156);
+    color: white;
+    border: none;
+}
+
+.nav > li > #adjustments-nav-tab:hover, .nav-tabs > li.active > #adjustments-nav-tab, .nav-tabs > li.active > #adjustments-nav-tab:focus, .nav-tabs > li.active > #adjustments-nav-tab:hover {
+    background: #84539c;
+    color: white;
+    border: none;
+}
+
+.nav > li > #kernel-nav-tab:hover, .nav-tabs > li.active > #kernel-nav-tab, .nav-tabs > li.active > #kernel-nav-tab:focus, .nav-tabs > li.active > #kernel-nav-tab:hover {
+    background: #9b3134;
+    color: white;
+    border: none;
+}
+
+.nav > li > #draw-nav-tab:hover, .nav-tabs > li.active > #draw-nav-tab, .nav-tabs > li.active > #draw-nav-tab:focus, .nav-tabs > li.active > #draw-nav-tab:hover {
+    background: #c56546;
+    color: white;
+    border: none;
+}
