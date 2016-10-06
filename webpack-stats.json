@@ -1,15 +1,1 @@
-{
-  "status": "done",
-  "chunks": {
-    "main": [
-      {
-        "name": "main-5ddcc3aba17e4acbc69b.js",
-        "path": "/home/sfanous/Programming/django-projects/theiaweb/build/main-5ddcc3aba17e4acbc69b.js"
-      },
-      {
-        "name": "main-5ddcc3aba17e4acbc69b.js.map",
-        "path": "/home/sfanous/Programming/django-projects/theiaweb/build/main-5ddcc3aba17e4acbc69b.js.map"
-      }
-    ]
-  }
-}
+{"status":"done","chunks":{"main":[{"name":"main-8e017b72cacba1a9836b.js","path":"/home/sfanous/Programming/django-projects/theiaweb/build/main-8e017b72cacba1a9836b.js"},{"name":"./build/styles.css","path":"/home/sfanous/Programming/django-projects/theiaweb/build/build/styles.css"},{"name":"main-8e017b72cacba1a9836b.js.map","path":"/home/sfanous/Programming/django-projects/theiaweb/build/main-8e017b72cacba1a9836b.js.map"},{"name":"./build/styles.css.map","path":"/home/sfanous/Programming/django-projects/theiaweb/build/build/styles.css.map"}]}}

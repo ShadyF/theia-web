@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import styles from './sidebar.scss'
 
 var SidebarHeader = React.createClass({
     render: () => {

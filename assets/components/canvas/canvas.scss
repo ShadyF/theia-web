@@ -1,0 +1,24 @@
+canvas {
+    border: .5em solid #fff;
+    box-shadow: 0 0 60px 20px rgba(0, 0, 0, 0.4);
+    background: white;
+}
+
+.canvas-wrapper {
+    height: calc(100% - 90px);
+    width: 100%;
+    overflow: auto;
+
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    box-shadow: none;
+}

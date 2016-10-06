@@ -2,7 +2,7 @@
   "name": "theiaweb",
   "version": "1.0.0",
   "description": "web-based image manipulation tool",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,23 +18,27 @@
   "homepage": "https://github.com/ShadyF/theia-web#readme",
   "devDependencies": {
     "babel-cli": "^6.16.0",
-    "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
-    "bootstrap": "^3.3.7",
     "bootstrap-colorpicker": "^2.3.6",
+    "bootstrap-loader": "^2.0.0-beta.12",
+    "bootstrap-sass": "^3.3.7",
     "css-loader": "^0.25.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "imports-loader": "^0.6.5",
     "j-i-c": "^2.0.2",
     "jquery": "^3.1.1",
     "node-sass": "^3.10.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "resolve-url-loader": "^1.6.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-bundle-tracker": "0.0.93",
-    "webpack-dev-server": "^1.16.1"
+    "webpack-dev-server": "^1.16.2"
   }
 }

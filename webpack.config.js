@@ -10,7 +10,7 @@ module.exports = {
     //the entry point we created earlier. Note that './' means
     //your current directory. You don't have to specify the extension  now,
     //because you will specify extensions later in the `resolve` section
-    entry: './assets/app',
+    entry: ['bootstrap-loader', './assets/app'],
 
     output: {
         path: path.resolve('./build/'),
@@ -31,6 +31,11 @@ module.exports = {
 
     module: {
         loaders: [
+            // Bootstrap 3
+            {test: /\.(woff2?|svg)$/, loader: 'url?limit=10000'},
+            {test: /\.(ttf|eot)$/, loader: 'file'},
+            {test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery'},
+
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
@@ -39,7 +44,10 @@ module.exports = {
                     presets: ['react', 'es2015']
                 }
             },
-
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+            },
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract('css!sass')
@@ -53,5 +61,6 @@ module.exports = {
         //extensions that should be used to resolve modules
         extensions: ['', '.js', '.jsx']
     },
+
     devtool: 'source-map'
 };
