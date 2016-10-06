@@ -1,0 +1,72 @@
+html, body {
+  height: 100%;
+}
+
+#wrapper {
+  padding-left: 250px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  height: 100%;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  .toggled {
+    padding-left: 0;
+  }
+}
+
+#wrapper.toggled .sidebar-wrapper {
+  width: 0;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  /* position: abosolute made sidebar overflow on <768 devices*/
+  position: relative;
+  padding: 15px;
+  height: 100%;
+  background: #333;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: relative;
+  margin-right: -250px;
+}
+
+@media (min-width: 768px) {
+  #wrapper {
+    padding-left: 250px;
+  }
+
+  #wrapper.toggled {
+    padding-left: 0;
+  }
+
+  #wrapper #sidebar-wrapper {
+    width: 250px;
+  }
+
+  #wrapper.toggled .sidebar-wrapper {
+    width: 0;
+  }
+
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+}
+
+.fill {
+  height: 100%;
+}
+
+.no-padding {
+  padding: 0;
+}
+
