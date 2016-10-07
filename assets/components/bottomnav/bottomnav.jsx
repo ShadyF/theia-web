@@ -2,9 +2,12 @@ import React from 'react'
 import style from './bottomnav.scss'
 
 var TransformsTab = React.createClass({
-    render: () => {
+    checkIfActive: function () {
+        return this.props.active ? "active" : "";
+    },
+    render: function () {
         return (
-            <div role="tabpanel" className="tab-pane active" id="transforms">
+            <div role="tabpanel" className={"tab-pane " + this.checkIfActive()} id="transforms">
                 <button type="button" className="btn btn-default btn-tabpane" data-toggle="popover"
                         data-content='<span class="slider-value">0</span>
                 <input class="slider-input" data-operation="Rotate"
@@ -17,17 +20,20 @@ var TransformsTab = React.createClass({
 });
 
 var TintsTab = React.createClass({
-    render: function() {
-        var tintButtons = this.props.tints.forEach((tint) => {
+    checkIfActive: function () {
+        return this.props.active ? "active" : "";
+    },
+    render: function () {
+        var tintButtons = this.props.tints.map(function (tint, id) {
             return (
-                <button type="button" className="btn btn-default tint btn-tabpane" data-operation="Tint"
+                <button type="button" key={id} className="btn btn-default tint btn-tabpane" data-operation="Tint"
                         data-tint_name={tint}>
                     {tint}
                 </button>
             )
         });
         return (
-            <div role="tabpanel" className="tab-pane" id="tints">
+            <div role="tabpanel" className={"tab-pane " + this.checkIfActive()} id="tints">
                 {tintButtons}
             </div>
         )
@@ -35,18 +41,27 @@ var TintsTab = React.createClass({
 });
 
 var BottomNav = React.createClass({
-    render: () => {
+    changeActiveTab: function (e) {
+        e.preventDefault();
+        this.setState({active_tab: e.target.id});
+    },
+    getInitialState: function () {
+        return {active_tab: 'transform-nav-tab'}
+    },
+    render: function () {
         var tints = ['HEY', 'GURL'];
         return (
             <nav className="navbar navbar-default navbar-fixed-bottom">
                 <div className="tab-content">
-                    <TransformsTab/>
-                    <TintsTab tints={tints}/>
+                    <TransformsTab active={this.state.active_tab == 'transform-nav-tab'}/>
+                    <TintsTab tints={tints} active={this.state.active_tab == 'tints-nav-tab'}/>
                 </div>
                 <ul className="nav nav-tabs">
-                    <li role="presentation" className="active"><a id="transform-nav-tab" href="#transforms">Transforms</a>
+                    <li role="presentation" className={this.state.active_tab == 'transform-nav-tab'? "active" : ""}><a
+                        onClick={this.changeActiveTab} id="transform-nav-tab" href="#transforms">Transforms</a>
                     </li>
-                    <li role="presentation"><a id="tints-nav-tab" href="#tints">Tints</a></li>
+                    <li role="presentation" className={this.state.active_tab == 'tints-nav-tab'? "active" : ""}><a
+                        onClick={this.changeActiveTab} id="tints-nav-tab" href="#tints">Tints</a></li>
                 </ul>
             </nav>
         )
