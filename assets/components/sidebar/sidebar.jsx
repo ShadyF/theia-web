@@ -28,7 +28,7 @@ var SidebarButtons = React.createClass({
                     Browse <input type="file" className="imageLoader" style={{display: 'none'}}/>
                 </label>
                 <button className="btn btn-side btn-reset" type="button">
-                    RESET
+                    Reset
                 </button>
                 <a href="download/" type="button" className="btn btn-download">
                     Download
